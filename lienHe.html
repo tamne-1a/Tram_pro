@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Liên hệ — Trạm</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root{
+      --paper:#F6EFDF; --navy:#2D2A4A; --mustard:#E3A94C; --ink:#1C1A2D;
+      --radius:18px; --shadow:0 10px 30px rgba(45,42,74,.15), 0 2px 8px rgba(45,42,74,.10);
+    }
+    *{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font-family:"Be Vietnam Pro",system-ui}
+    h1,h2{font-family:"Merriweather",Georgia,serif}
+    a{color:inherit;text-decoration:none}
+    .container{width:min(1160px,92%);margin-inline:auto}
+    header{position:sticky;top:0;background:rgba(246,239,223,.95);border-bottom:2px solid var(--navy)}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0}
+    nav ul{list-style:none;display:flex;gap:10px;margin:0;padding:0}
+    nav a{padding:10px 14px;border-radius:999px;border:2px solid var(--navy);background:#fff7e6;box-shadow:0 2px 0 var(--navy);font-weight:600}
+    nav a.active{background:var(--mustard);color:#2D2A4A}
+    .brand{display:flex;gap:14px;align-items:center}
+    .brand img{width:56px;height:56px;border-radius:14px;border:3px solid var(--navy)}
+    main{padding:22px 0}
+    .card{background:#fffef9;border:2px solid var(--navy);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+
+    form{display:grid;gap:12px;max-width:640px}
+    label{font-weight:600}
+    input, textarea{
+      width:100%; padding:10px 12px; border-radius:10px; border:2px solid var(--navy); background:#fffefb;
+      font-family:inherit; font-size:16px;
+    }
+    textarea{min-height:140px; resize:vertical}
+    .row{display:grid; gap:12px; grid-template-columns:1fr 1fr}
+    .actions{display:flex;gap:10px}
+    button{
+      padding:10px 16px; border-radius:10px; border:2px solid var(--navy);
+      background:var(--mustard); color:#2D2A4A; font-weight:700; cursor:pointer;
+      box-shadow:0 2px 0 var(--navy);
+    }
+    button[type="reset"]{background:#fff7e6}
+    footer{margin-top:32px;background:rgba(246,239,223,.9);border-top:2px solid var(--navy)}
+    .footer-inner{padding:22px 0}
+    @media (max-width:700px){ .row{grid-template-columns:1fr} }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="Trạm.html"><img src="518353519_122269577192024728_1727089180546541802_n.png" alt="Trạm"><h1 style="margin:0 0 0 6px;font-size:22px">Trạm</h1></a>
+      <nav><ul>
+        <li><a href="Trạm.html#gt-ve-tram">Giới thiệu</a></li>
+        <li><a href="menuTramChanh.html#Menu-tram-chanh">Menu Trạm Chanh</a></li>
+        <li><a href="menuTramSua.html#Menu-tram-sua">Menu Trạm Sữa</a></li>
+        <li><a href="Trạm.html#danh-muc-san-pham">Danh mục</a></li>
+        <li><a href="thoiGianMoCua.html">Mở cửa</a></li>
+        <li><a class="active" href="#top">Liên hệ</a></li>
+      </ul></nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2 style="margin-top:0">Liên hệ với Trạm</h2>
+      <form action="https://httpbin.org/get" method="get">
+        <div class="row">
+          <p><label for="ten">Tên</label><br><input type="text" id="ten" name="ten" placeholder="Tên của bạn" required></p>
+          <p><label for="phone">Điện thoại</label><br><input type="tel" id="phone" name="dien-thoai" placeholder="SĐT của bạn"></p>
+        </div>
+        <p><label for="email">Email</label><br><input type="email" id="email" name="email" placeholder="Email của bạn" required></p>
+        <p><label for="msg">Lời nhắn</label><br><textarea id="msg" name="loi-nhan" placeholder="Để lại lời nhắn ở đây"></textarea></p>
+        <div class="actions">
+          <button type="submit">Gửi</button>
+          <button type="reset">Xóa</button>
+        </div>
+      </form>
+      <p style="margin-top:12px"><a href="#top">↑ Trở về đầu trang</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <p>Bản quyền &copy; thuộc về Trạm.</p>
+      <p>📍 09 Hải Thượng, Cam Ly, Lâm Đồng &nbsp;•&nbsp; 📍 44 Yersin, Xuân Hương, Lâm Đồng</p>
+      <p>📞 <a href="tel:0941668405">094 166 8405</a></p>
+    </div>
+  </footer>
+</body>
+</html>
