@@ -4,108 +4,79 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Thời gian mở cửa — Trạm</title>
-  <meta name="theme-color" content="#F6EFDF" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet" />
   <style>
     :root{
-      --paper:#F6EFDF; --navy:#2D2A4A; --mustard:#E3A94C; --ink:#1C1A2D; --muted:#5D5B63;
-      --maroon-d:#5C1F24;
+      --paper:#F6EFDF; --navy:#2D2A4A; --mustard:#E3A94C; --ink:#1C1A2D; --muted:#5D5B63; --maroon-d:#5C1F24;
       --radius:18px; --shadow:0 10px 30px rgba(45,42,74,.15), 0 2px 8px rgba(45,42,74,.10);
     }
-    @media (prefers-reduced-motion: reduce){
-      *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
-    }
-
-    *{box-sizing:border-box}
-    body{
-      margin:0;background:var(--paper);color:var(--ink);
-      font-family:"Be Vietnam Pro",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-      line-height:1.65;
-    }
+    *{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font-family:"Be Vietnam Pro",system-ui}
     h1,h2{font-family:"Merriweather",Georgia,serif}
-    h1{font-size:clamp(20px,4.6vw,28px);margin:0}
-    h2{font-size:clamp(18px,4.2vw,26px)}
     a{color:inherit;text-decoration:none}
-    img{max-width:100%;height:auto;display:block}
     .container{width:min(1160px,92%);margin-inline:auto}
-
-    header{
-      position:sticky;top:0;background:rgba(246,239,223,.95);
-      border-bottom:1.5px solid var(--navy);backdrop-filter:blur(6px);z-index:10
-    }
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0}
-    .brand{display:flex;gap:10px;align-items:center;min-width:0}
-    .brand img{width:52px;height:52px;border-radius:14px;border:2px solid var(--navy)}
-    nav ul{
-      list-style:none;display:flex;gap:8px;margin:0;padding:0;
-      overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; max-width:56vw;
-    }
-    nav ul::-webkit-scrollbar{display:none}
-    nav a{
-      padding:10px 12px;border-radius:999px;border:1.5px solid var(--navy);
-      background:#fff7e6;box-shadow:0 2px 0 var(--navy);font-weight:700;font-size:14px;flex:0 0 auto
-    }
+    header{position:sticky;top:0;background:rgba(246,239,223,.95);border-bottom:2px solid var(--navy);backdrop-filter:blur(6px)}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0}
+    nav ul{list-style:none;display:flex;gap:10px;margin:0;padding:0}
+    nav a{padding:10px 14px;border-radius:999px;border:2px solid var(--navy);background:#fff7e6;box-shadow:0 2px 0 var(--navy);font-weight:600}
     nav a.active{background:var(--mustard);color:#2D2A4A}
-
-    main{padding:16px 0}
-    .card{
-      background:#fffef9;border:1.5px solid var(--navy);border-radius:var(--radius);
-      box-shadow:var(--shadow);padding:14px
-    }
-    dt{font-weight:800} dd{margin:0 0 8px 0}
+    .brand{display:flex;gap:14px;align-items:center}
+    .brand img{width:56px;height:56px;border-radius:14px;border:3px solid var(--navy)}
+    main{padding:22px 0}
+    .card{background:#fffef9;border:2px solid var(--navy);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+    dt{font-weight:700} dd{margin:0 0 8px 0}
     .note{color:var(--muted);font-size:14px}
-
-    /* status badge */
     .status{
       display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;border-radius:999px;border:1.5px solid var(--navy);
+      padding:8px 12px;border-radius:999px;border:2px solid var(--navy);
       background:#fff7e6;font-weight:800;margin:8px 0 0 0
     }
     .status.open{background:#e9ffe9;border-color:#1f7a21;color:#135415}
     .status.closed{background:#fff1f1;border-color:#a12626;color:#7a1414}
-
     .quick-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
     .btn{
-      padding:12px 16px; border-radius:12px; border:1.5px solid var(--navy);
+      padding:12px 16px; border-radius:12px; border:2px solid var(--navy);
       background:#fff7e6; color:#2D2A4A; font-weight:800; box-shadow:0 2px 0 var(--navy);
       display:inline-flex;align-items:center;gap:8px; min-height:44px;
     }
-    .btn:hover{background:#fff2d5}
+    footer{margin-top:32px;background:rgba(246,239,223,.9);border-top:2px solid var(--navy)}
+    .footer-inner{padding:22px 0}
 
-    footer{margin-top:24px;background:rgba(246,239,223,.9);border-top:1.5px solid var(--navy)}
-    .footer-inner{padding:16px 0}
+    /* Nút nổi */
+    .contact-buttons { position: fixed; right: 16px; bottom: 80px; display: flex; flex-direction: column; gap: 12px; z-index: 100; }
+    .contact-buttons a { display:flex;align-items:center;justify-content:center; width:56px;height:56px;border-radius:50%; border:2px solid var(--navy); background:#fff7e6; box-shadow:var(--shadow); font-size:26px; transition: transform .15s }
+    .contact-buttons a:hover{ transform: translateY(-2px) }
+    .call-btn{ color: var(--maroon-d) }
+    .zalo-btn img{ width:34px; height:34px }
 
-    /* Floating contact buttons */
-    .contact-buttons {
-      position: fixed; right: 14px; bottom: 78px;
-      display: flex; flex-direction: column; gap: 10px; z-index: 100;
+    /* === MOBILE NAV FIX (≤700px) === */
+    @media (max-width:700px){
+      .nav{ display:grid; grid-template-columns:auto 1fr; align-items:center; gap:10px; padding:8px 0 }
+      .brand, nav, nav ul{ min-width:0 }
+      .brand img{ width:48px; height:48px; border-width:2px }
+      .brand h1{ font-size:20px; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+      nav ul{ display:flex; gap:8px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; max-width:58vw }
+      nav ul::-webkit-scrollbar{ display:none }
+      nav li{ flex:0 0 auto }
+      nav a{ padding:10px 12px; font-size:14px; border-width:1.5px; box-shadow:0 2px 0 var(--navy) }
+      .card{ padding:14px; border-width:1.5px; border-radius:16px; box-shadow:0 8px 20px rgba(45,42,74,.10), 0 2px 6px rgba(45,42,74,.06) }
+      .contact-buttons{ right:14px; bottom:76px; gap:10px }
+      .contact-buttons a{ width:52px; height:52px; border-width:1.5px; font-size:24px }
     }
-    .contact-buttons a {
-      display:flex;align-items:center;justify-content:center;
-      width:52px;height:52px;border-radius:50%;
-      border:1.5px solid var(--navy); background:#fff7e6; box-shadow:var(--shadow);
-      font-size:24px; touch-action:manipulation;
-    }
-    .contact-buttons a:hover{transform:translateY(-2px)}
-    .call-btn{color:var(--maroon-d)}
-    .zalo-btn img{width:30px;height:30px}
   </style>
 </head>
 <body>
   <header id="top">
     <div class="container nav">
-      <a class="brand" href="index.html"><img src="519519306_122269576958024728_6134494741448327598_n.jpg" alt="Trạm"><h1>Trạm</h1></a>
-      <nav>
-        <ul>
-          <li><a href="index.html#gt-ve-tram">Giới thiệu</a></li>
-          <li><a href="menuTramChanh.html#Menu-tram-chanh">Menu Trạm Chanh</a></li>
-          <li><a href="menuTramSua.html#Menu-tram-sua">Menu Trạm Sữa</a></li>
-          <li><a href="index.html#danh-muc-san-pham">Danh mục</a></li>
-          <li><a class="active" href="#top">Mở cửa</a></li>
-          <li><a href="lienHe.html">Liên hệ</a></li>
-        </ul>
-      </nav>
+      <a class="brand" href="index.html"><img src="519519306_122269576958024728_6134494741448327598_n.jpg" alt="Trạm"><h1 style="margin:0 0 0 6px;font-size:22px">Trạm</h1></a>
+      <nav><ul>
+        <li><a href="index.html#gt-ve-tram">Giới thiệu</a></li>
+        <li><a href="menuTramChanh.html#Menu-tram-chanh">Menu Trạm Chanh</a></li>
+        <li><a href="menuTramSua.html#Menu-tram-sua">Menu Trạm Sữa</a></li>
+        <li><a href="index.html#danh-muc-san-pham">Danh mục</a></li>
+        <li><a class="active" href="#top">Mở cửa</a></li>
+        <li><a href="lienHe.html">Liên hệ</a></li>
+      </ul></nav>
     </div>
   </header>
 
@@ -140,11 +111,11 @@
     </div>
   </footer>
 
-  <!-- Nút liên hệ nổi -->
+  <!-- Nút nổi -->
   <div class="contact-buttons" aria-label="Liên hệ nhanh">
     <a href="tel:0941668405" class="call-btn" aria-label="Gọi hotline Trạm">📞</a>
     <a href="https://zalo.me/0941668405" class="zalo-btn" aria-label="Nhắn tin Zalo Trạm" target="_blank" rel="noopener">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" loading="lazy" decoding="async" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" />
     </a>
   </div>
 
@@ -165,27 +136,19 @@
   </script>
 
   <script>
-    // ====== Tính trạng thái mở cửa theo giờ VN (Asia/Ho_Chi_Minh) ======
+    // Trạng thái mở cửa theo Asia/Ho_Chi_Minh
     (function(){
       const statusEl = document.getElementById('openStatus');
       try {
-        // Lấy giờ hiện tại theo VN
         const now = new Date();
-        // Quy đổi sang giờ Việt Nam bằng Intl (tránh lệch múi giờ)
-        const fmt = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: 'Asia/Ho_Chi_Minh' });
-        const [hStr, mStr] = fmt.format(now).split(':');
-        const h = parseInt(hStr, 10), m = parseInt(mStr, 10);
-        const minutes = h * 60 + m;
-
-        // Giờ mở cửa 19:00 → 24:00 (tính đến 23:59)
-        const openStart = 19 * 60;
-        const openEnd = 24 * 60 - 1;
-
-        if (minutes >= openStart && minutes <= openEnd) {
+        const fmt = new Intl.DateTimeFormat('en-GB', { hour:'2-digit', minute:'2-digit', hour12:false, timeZone:'Asia/Ho_Chi_Minh' });
+        const [hStr,mStr] = fmt.format(now).split(':'); const h=+hStr, m=+mStr; const minutes = h*60+m;
+        const openStart = 19*60, openEnd = 24*60-1;
+        if(minutes>=openStart && minutes<=openEnd){
           statusEl.textContent = '✅ Đang mở cửa (19:00–24:00)';
           statusEl.classList.add('open'); statusEl.classList.remove('closed');
-        } else {
-          statusEl.textContent = '⏳ Chưa mở (Mở từ 19:00–24:00 hôm nay)';
+        }else{
+          statusEl.textContent = '⏳ Chưa mở (Mở 19:00–24:00 hôm nay)';
           statusEl.classList.add('closed'); statusEl.classList.remove('open');
         }
       } catch(e){
@@ -193,24 +156,17 @@
       }
     })();
 
-    // ====== Tạo file ICS (thêm lịch mở cửa hằng ngày) ======
+    // Tạo file ICS (mốc hôm nay, lặp daily 19:00–24:00)
     (function(){
-      const a = document.getElementById('icsLink');
-      if(!a) return;
-
-      // Tạo DTSTART ở ngày hôm nay theo VN, lặp daily 19:00–24:00 (block 5 tiếng)
-      const tz = 'Asia/Ho_Chi_Minh';
-      const now = new Date();
-      const y = new Intl.DateTimeFormat('en-CA', { timeZone: tz, year:'numeric'}).format(now);     // YYYY
-      const mo = new Intl.DateTimeFormat('en-CA', { timeZone: tz, month:'2-digit'}).format(now);   // MM
-      const d = new Intl.DateTimeFormat('en-CA', { timeZone: tz, day:'2-digit'}).format(now);      // DD
-
+      const a = document.getElementById('icsLink'); if(!a) return;
+      const tz = 'Asia/Ho_Chi_Minh', now = new Date();
+      const y = new Intl.DateTimeFormat('en-CA',{timeZone:tz,year:'numeric'}).format(now);
+      const mo= new Intl.DateTimeFormat('en-CA',{timeZone:tz,month:'2-digit'}).format(now);
+      const d = new Intl.DateTimeFormat('en-CA',{timeZone:tz,day:'2-digit'}).format(now);
       const dt = `${y}${mo}${d}`;
-      const DTSTART = `${dt}T120000Z`; // 19:00 VN ~ 12:00Z (UTC) (VN = UTC+7)
+      const DTSTART = `${dt}T120000Z`; // 19:00 VN ~ 12:00Z
       const DTEND   = `${dt}T170000Z`; // 24:00 VN ~ 17:00Z
-
-      const ics =
-`BEGIN:VCALENDAR
+      const ics = `BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Tram//OpeningHours//VN
 CALSCALE:GREGORIAN
@@ -224,10 +180,7 @@ DTEND:${DTEND}
 RRULE:FREQ=DAILY
 END:VEVENT
 END:VCALENDAR`;
-
-      const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      a.href = url;
+      const blob = new Blob([ics], {type:'text/calendar;charset=utf-8'}); a.href = URL.createObjectURL(blob);
     })();
   </script>
 </body>
