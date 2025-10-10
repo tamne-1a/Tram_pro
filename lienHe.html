@@ -8,6 +8,71 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet" />
   <style>
+      /* === MOBILE PATCH (Áp dụng cho ≤ 700px) === */
+  @media (max-width: 700px){
+    /* Khung/lề & typographic */
+    html { scroll-behavior: smooth; }
+    body { line-height: 1.7; }
+    h1 { font-size: clamp(20px, 5vw, 26px); }
+    h2 { font-size: clamp(18px, 4.6vw, 24px); }
+    h3 { font-size: clamp(16px, 4.2vw, 22px); }
+    .container { width: min(1160px, 94%); }
+  
+    /* Header & Nav (giảm nặng, dễ cuộn) */
+    header { border-bottom-width: 1.5px; }
+    .nav { padding: 8px 0; gap: 10px; }
+    .brand img { width: 48px; height: 48px; border-width: 2px; }
+    nav ul{
+      display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; max-width: 58vw; margin: 0; padding: 0;
+    }
+    nav ul::-webkit-scrollbar{ display: none; }
+    nav a{
+      padding: 10px 12px; font-size: 14px; border-width: 1.5px; box-shadow: 0 2px 0 var(--navy);
+    }
+  
+    /* Card/khối nội dung (nhẹ border & shadow) */
+    .card, .section-card {
+      padding: 14px; border-width: 1.5px;
+      box-shadow: 0 8px 20px rgba(45,42,74,.10), 0 2px 6px rgba(45,42,74,.06);
+      border-radius: 16px;
+    }
+  
+    /* Bảng kéo ngang mượt */
+    .table-wrap { overflow: auto; -webkit-overflow-scrolling: touch; }
+    table { min-width: 560px; border-width: 1.5px; }
+    th, td { padding: 12px 14px; }
+  
+    /* Form dùng tap-target ≥44px, tránh zoom iOS */
+    input, textarea, button, .btn { min-height: 44px; font-size: 16px; }
+    .row { grid-template-columns: 1fr; gap: 10px; }
+    .actions { gap: 10px; flex-wrap: wrap; }
+    button, .btn {
+      padding: 12px 16px; border-radius: 12px; border-width: 1.5px;
+      box-shadow: 0 2px 0 var(--navy);
+    }
+  
+    /* Ảnh luôn ôm theo màn hình */
+    img { height: auto; max-width: 100%; }
+  
+    /* Nút nổi: không đè nội dung và to đủ bấm */
+    .contact-buttons {
+      right: 14px; bottom: 76px; gap: 10px; z-index: 60;
+    }
+    .contact-buttons a {
+      width: 52px; height: 52px; border-width: 1.5px; font-size: 24px;
+    }
+  
+    /* Footer gọn */
+    footer { margin-top: 22px; border-top-width: 1.5px; }
+    .footer-inner { padding: 16px 0; }
+  }
+  
+  /* Hạn chế hiệu ứng trên máy yếu/người dùng không thích animation */
+  @media (prefers-reduced-motion: reduce){
+    * { animation: none !important; transition: none !important; }
+  }
+
     :root{
       --paper:#F6EFDF; --navy:#2D2A4A; --mustard:#E3A94C; --ink:#1C1A2D; --muted:#5D5B63;
       --maroon-d:#5C1F24;
@@ -249,3 +314,4 @@
   </script>
 </body>
 </html>
+
