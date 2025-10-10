@@ -41,19 +41,21 @@
     .menu-toggle[aria-expanded="true"] .bar:nth-child(1){ transform: translateY(5px) rotate(45deg) }
     .menu-toggle[aria-expanded="true"] .bar:nth-child(2){ opacity:0 }
     .menu-toggle[aria-expanded="true"] .bar:nth-child(3){ transform: translateY(-5px) rotate(-45deg) }
+
     .drawer{position:fixed;inset:0;display:grid;z-index:120}.drawer[hidden]{display:none}
-    .drawer-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.35)}
+    .drawer-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:0}
     .drawer-nav{
       position:absolute;top:0;right:0;height:100%;width:min(86vw,340px);
       background:#fffef9;border-left:2px solid var(--navy);box-shadow:var(--shadow);
-      padding:18px;transform:translateX(100%);transition:transform .2s ease-out
+      padding:18px;padding-top:64px;transform:translateX(100%);transition:transform .2s ease-out;
+      overflow:auto;z-index:1
     }
     .drawer.open .drawer-nav{transform:translateX(0)}
     .drawer-nav ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
     .drawer-nav a{display:block;padding:12px 14px;border:2px solid var(--navy);border-radius:12px;background:#fff7e6;box-shadow:0 2px 0 var(--navy);font-weight:800}
     .drawer-close{
-      position:absolute;top:10px;right:calc(min(86vw,340px)+10px);
-      width:40px;height:40px;border-radius:10px;border:2px solid var(--navy);background:#fff7e6;box-shadow:0 2px 0 var(--navy)
+      position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:10px;border:2px solid var(--navy);
+      background:#fff7e6;box-shadow:0 2px 0 var(--navy);cursor:pointer;z-index:2
     }
     @media (max-width:900px){ .nav-inline{display:none} .menu-toggle{display:inline-flex} .brand-logo{width:52px;height:52px;border-width:2px} .brand-title{font-size:20px} }
 
@@ -118,6 +120,7 @@
 
     <div id="mobile-drawer" class="drawer" hidden>
       <nav class="drawer-nav" aria-label="Menu di động">
+        <button class="drawer-close" aria-label="Đóng menu">✕</button>
         <ul>
           <li><a href="index.html#gt-ve-tram">Giới thiệu</a></li>
           <li><a href="menuTramChanh.html#Menu-tram-chanh">Menu Trạm Chanh</a></li>
@@ -127,7 +130,6 @@
           <li><a href="lienHe.html">Liên hệ</a></li>
         </ul>
       </nav>
-      <button class="drawer-close" aria-label="Đóng menu">✕</button>
       <div class="drawer-backdrop" tabindex="-1"></div>
     </div>
   </header>
@@ -137,7 +139,6 @@
     <section class="card">
       <h2 style="margin-top:0">Liên hệ với Trạm</h2>
 
-      <!-- Demo: gửi GET để xem dữ liệu (bạn có thể giữ hoặc chuyển sang giải pháp gửi email phía server) -->
       <form id="contactForm" action="https://httpbin.org/get" method="get" novalidate>
         <div class="row">
           <p><label for="ten">Tên</label><br><input type="text" id="ten" name="ten" placeholder="Tên của bạn" autocomplete="name" required></p>
@@ -212,7 +213,7 @@
       return ok;
     }
 
-    // Zalo button: copy nội dung form -> mở Zalo
+    // Zalo button
     document.getElementById('zaloSendBtn').addEventListener('click', async function(e){
       e.preventDefault();
       const name  = (document.getElementById('ten')?.value || '').trim();
@@ -236,7 +237,7 @@
       else window.open(zaloLink, '_blank');
     });
 
-    // Mailto: dựng subject/body rồi mở app email với người nhận nthanhtam.402@gmail.com
+    // Mailto
     document.getElementById('mailtoBtn').addEventListener('click', function(e){
       e.preventDefault();
       const name  = (document.getElementById('ten')?.value || '').trim();
@@ -259,7 +260,7 @@ ${msg || '(Chưa nhập)'}
       window.location.href = `mailto:nthanhtam.402@gmail.com?subject=${subject}&body=${body}`;
     });
 
-    // Validate tối thiểu cho form demo
+    // Validate form demo
     document.getElementById('contactForm').addEventListener('submit', function(ev){
       const name = document.getElementById('ten').value.trim();
       const email = document.getElementById('email').value.trim();
