@@ -4,91 +4,115 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Menu Trạm Chanh — Trạm</title>
+  <meta name="theme-color" content="#F6EFDF" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet" />
   <style>
     :root{
       --paper:#F6EFDF; --paper-ink:#E9E1CF; --ink:#1C1A2D;
-      --navy:#2D2A4A; --maroon:#7E2930; --mustard:#E3A94C;
+      --navy:#2D2A4A; --maroon:#7E2930; --maroon-d:#5C1F24; --mustard:#E3A94C;
       --radius:18px; --shadow:0 10px 30px rgba(45,42,74,.15), 0 2px 8px rgba(45,42,74,.10);
     }
-    *{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font-family:"Be Vietnam Pro",system-ui}
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    }
+
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:"Be Vietnam Pro",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.65}
     h1,h2,h3{font-family:"Merriweather",Georgia,serif}
-    a{color:inherit;text-decoration:none} img{max-width:100%;display:block}
+    h1{font-size:clamp(20px,4.6vw,28px);margin:0}
+    h2{font-size:clamp(18px,4.2vw,26px)}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;height:auto;display:block}
     .container{width:min(1160px,92%);margin-inline:auto}
-    header{position:sticky;top:0;z-index:50;background:rgba(246,239,223,.95);border-bottom:2px solid var(--navy)}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0}
-    nav ul{list-style:none;display:flex;gap:10px;margin:0;padding:0}
-    nav a{padding:10px 14px;border-radius:999px;border:2px solid var(--navy);background:#fff7e6;box-shadow:0 2px 0 var(--navy);font-weight:600}
+
+    /* Header */
+    header{
+      position:sticky;top:0;z-index:50;background:rgba(246,239,223,.95);
+      border-bottom:1.5px solid var(--navy);backdrop-filter:blur(6px)
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0}
+    .brand{display:flex;gap:10px;align-items:center;min-width:0}
+    .brand img{width:52px;height:52px;border-radius:14px;border:2px solid var(--navy)}
+    nav ul{
+      list-style:none;display:flex;gap:8px;margin:0;padding:0;overflow-x:auto;
+      -webkit-overflow-scrolling:touch;scrollbar-width:none;max-width:56vw
+    }
+    nav ul::-webkit-scrollbar{display:none}
+    nav a{
+      padding:10px 12px;border-radius:999px;border:1.5px solid var(--navy);
+      background:#fff7e6;box-shadow:0 2px 0 var(--navy);font-weight:700;font-size:14px;flex:0 0 auto
+    }
     nav a:hover{transform:translateY(-2px)}
     nav a.active{background:var(--mustard);color:#2D2A4A}
-    .brand{display:flex;gap:14px;align-items:center}
-    .brand img{width:56px;height:56px;border-radius:14px;border:3px solid var(--navy)}
-    main{padding:22px 0}
-    .card{background:#fffef9;border:2px solid var(--navy);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
-    footer{margin-top:32px;background:rgba(246,239,223,.9);border-top:2px solid var(--navy)}
-    .footer-inner{padding:22px 0}
+
+    main{padding:16px 0}
+    .card{background:#fffef9;border:1.5px solid var(--navy);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
+
+    footer{margin-top:24px;background:rgba(246,239,223,.9);border-top:1.5px solid var(--navy)}
+    .footer-inner{padding:16px 0}
+
     /* Nút liên hệ nổi */
-.contact-buttons {
-  position: fixed;
-  right: 16px;
-  bottom: 80px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  z-index: 100;
-}
+    .contact-buttons {
+      position: fixed; right: 14px; bottom: 78px;
+      display: flex; flex-direction: column; gap: 10px; z-index: 100;
+    }
+    .contact-buttons a {
+      display: flex; align-items: center; justify-content: center;
+      width: 52px; height: 52px; border-radius: 50%;
+      border: 1.5px solid var(--navy); background: #fff7e6; box-shadow: var(--shadow);
+      font-size: 24px; touch-action: manipulation;
+    }
+    .contact-buttons a:hover { transform: translateY(-2px) }
+    .call-btn { color: var(--maroon-d) }
+    .zalo-btn img { width: 30px; height: 30px }
 
-.contact-buttons a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: 2px solid var(--navy);
-  background: #fff7e6;
-  box-shadow: var(--shadow);
-  font-size: 26px;
-  transition: transform .15s, background .15s;
-}
-
-.contact-buttons a:hover {
-  transform: translateY(-3px);
-  background: #fff2d5;
-}
-
-.call-btn {
-  color: var(--maroon-d);
-}
-
-.zalo-btn img {
-  width: 34px;
-  height: 34px;
-}
-
+    /* Ảnh menu container để tránh lệch lề trên mobile */
+    .menu-img{border:1.5px solid var(--navy);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+    .back-top{margin-top:10px}
   </style>
 </head>
 <body>
-  <header>
+  <header id="top">
     <div class="container nav">
-      <a class="brand" href="index.html"><img src="519519306_122269576958024728_6134494741448327598_n.jpg" alt="Trạm"><h1 style="margin:0 0 0 6px;font-size:22px">Trạm</h1></a>
-      <nav><ul>
-        <li><a href="index.html#gt-ve-tram">Giới thiệu</a></li>
-        <li><a class="active" href="#Menu-tram-chanh">Menu Trạm Chanh</a></li>
-        <li><a href="menuTramSua.html#Menu-tram-sua">Menu Trạm Sữa</a></li>
-        <li><a href="index.html#danh-muc-san-pham">Danh mục</a></li>
-        <li><a href="thoiGianMoCua.html">Mở cửa</a></li>
-        <li><a href="lienHe.html">Liên hệ</a></li>
-      </ul></nav>
+      <a class="brand" href="index.html" aria-label="Trang chủ Trạm">
+        <img src="519519306_122269576958024728_6134494741448327598_n.jpg" alt="Trạm" loading="eager" decoding="sync">
+        <h1>Trạm</h1>
+      </a>
+      <nav aria-label="Điều hướng chính">
+        <ul>
+          <li><a href="index.html#gt-ve-tram">Giới thiệu</a></li>
+          <li><a class="active" href="#Menu-tram-chanh">Menu Trạm Chanh</a></li>
+          <li><a href="menuTramSua.html#Menu-tram-sua">Menu Trạm Sữa</a></li>
+          <li><a href="index.html#danh-muc-san-pham">Danh mục</a></li>
+          <li><a href="thoiGianMoCua.html">Mở cửa</a></li>
+          <li><a href="lienHe.html">Liên hệ</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
 
   <main class="container">
-    <section id="Menu-tram-chanh" class="card">
-      <h2 style="margin-top:0">Menu Trạm Chanh</h2>
-      <img src="z6978373558980_2d600e780702f04503b1312747407277.jpg" alt="Menu Trạm Chanh" title="Menu Trạm Chanh">
-      <p style="margin-top:10px"><a href="#top">↑ Trở về đầu trang</a></p>
+    <section id="Menu-tram-chanh" class="card" aria-labelledby="menu-title">
+      <h2 id="menu-title" style="margin-top:0">Menu Trạm Chanh</h2>
+
+      <!-- Nếu có nhiều kích thước ảnh, dùng picture/srcset để tải nhanh hơn -->
+      <div class="menu-img">
+        <!-- Ví dụ: thay thế bằng file webp/jpg của bạn -->
+        <!--
+        <picture>
+          <source type="image/webp" srcset="menu-chanh-800.webp 800w, menu-chanh-1200.webp 1200w" sizes="(max-width: 700px) 92vw, 900px">
+          <img src="menu-chanh-1200.jpg" alt="Menu Trạm Chanh" loading="lazy" decoding="async">
+        </picture>
+        -->
+        <img
+          src="z6978373558980_2d600e780702f04503b1312747407277.jpg"
+          alt="Menu Trạm Chanh"
+          title="Menu Trạm Chanh"
+          loading="lazy" decoding="async">
+      </div>
+
+      <p class="back-top"><a href="#top">↑ Trở về đầu trang</a></p>
     </section>
   </main>
 
@@ -99,19 +123,13 @@
       <p>📞 <a href="tel:0941668405">094 166 8405</a></p>
     </div>
   </footer>
-  <!-- Nút liên hệ nổi -->
-<div class="contact-buttons">
-  <a href="tel:0941668405" class="call-btn" aria-label="Gọi hotline Trạm">
-    📞
-  </a>
-  <a href="https://zalo.me/0941668405" class="zalo-btn" aria-label="Nhắn tin Zalo Trạm" target="_blank" rel="noopener">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" />
-  </a>
-</div>
 
+  <!-- Nút liên hệ nổi -->
+  <div class="contact-buttons" aria-label="Liên hệ nhanh">
+    <a href="tel:0941668405" class="call-btn" aria-label="Gọi hotline Trạm">📞</a>
+    <a href="https://zalo.me/0941668405" class="zalo-btn" aria-label="Nhắn tin Zalo Trạm" target="_blank" rel="noopener">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" loading="lazy" decoding="async" />
+    </a>
+  </div>
 </body>
 </html>
-
-
-
-
