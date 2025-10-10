@@ -147,42 +147,41 @@
     </a>
   </div>
   <script>
-    // Ghép nội dung form vào link Zalo khi bấm nút
-    document.getElementById('zaloSendBtn').addEventListener('click', function(e){
-      // Lấy dữ liệu từ form
-      const name  = (document.getElementById('ten')?.value || '').trim();
-      const phone = (document.getElementById('phone')?.value || '').trim();
-      const email = (document.getElementById('email')?.value || '').trim();
-      const msg   = (document.getElementById('msg')?.value || '').trim();
-    if(!name || !msg){
+document.getElementById('zaloSendBtn').addEventListener('click', function(e){
+  e.preventDefault(); // chặn mở link mặc định để JS xử lý
+
+  const name  = (document.getElementById('ten')?.value || '').trim();
+  const phone = (document.getElementById('phone')?.value || '').trim();
+  const email = (document.getElementById('email')?.value || '').trim();
+  const msg   = (document.getElementById('msg')?.value || '').trim();
+
+  // Kiểm tra bắt buộc
+  if(!name || !msg){
     alert('Vui lòng nhập Tên và Lời nhắn trước khi gửi qua Zalo.');
-    e.preventDefault();
     return;
   }
 
-      // Tạo nội dung mẫu (bạn có thể sửa câu chữ cho hợp ý)
-      const lines = [
-        'Chào Trạm, mình muốn liên hệ!',
-        `• Tên: ${name || 'Chưa cung cấp'}`,
-        `• SĐT: ${phone || 'Chưa cung cấp'}`,
-        `• Email: ${email || 'Chưa cung cấp'}`,
-        `• Nội dung: ${msg || '—'}`
-      ];
-  
-      // Nối dòng + mã hoá an toàn cho URL
-      const text = encodeURIComponent(lines.join('\n'));
-  
-      // Gán href động để mở Zalo với tin nhắn soạn sẵn
-      this.href = `https://zalo.me/0941668405?text=${text}`;
-  
-      // LƯU Ý:
-      // - Trên mobile có Zalo app: sẽ mở app với tin nhắn đã điền, user chỉ cần "Gửi".
-      // - Trên desktop: sẽ mở Zalo PC (nếu đã cài / đăng nhập) hoặc Zalo Web.
-    });
-  </script>
+  // Ghép nội dung tin nhắn
+  const lines = [
+    'Chào Trạm, mình muốn liên hệ!',
+    `• Tên: ${name}`,
+    `• SĐT: ${phone || 'Chưa cung cấp'}`,
+    `• Email: ${email || 'Chưa cung cấp'}`,
+    `• Nội dung: ${msg}`
+  ];
+
+  const text = encodeURIComponent(lines.join('\n'));
+  const zaloLink = `https://zalo.me/0941668405?text=${text}`;
+
+  // 👉 Mở Zalo với tin nhắn đã soạn sẵn
+  window.open(zaloLink, '_blank');  // mở tab mới hoặc app Zalo
+});
+</script>
+
 
 </body>
 </html>
+
 
 
 
