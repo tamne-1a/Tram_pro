@@ -4,256 +4,153 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Trạm - Luôn tươi ngon vì sức khỏe" />
-  <title>Trạm — Luôn tươi ngon vì sức khỏe</title>
-
-  <!-- Hiệu năng font -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet" />
+  <title>Trạm — Tươi ngon mỗi ngày</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
-
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet" />
   <style>
-    /* === MOBILE PATCH (Áp dụng cho ≤ 700px) === */
-@media (max-width: 700px){
-  /* Khung/lề & typographic */
-  html { scroll-behavior: smooth; }
-  body { line-height: 1.7; }
-  h1 { font-size: clamp(20px, 5vw, 26px); }
-  h2 { font-size: clamp(18px, 4.6vw, 24px); }
-  h3 { font-size: clamp(16px, 4.2vw, 22px); }
-  .container { width: min(1160px, 94%); }
-
-  /* Header & Nav (giảm nặng, dễ cuộn) */
-  header { border-bottom-width: 1.5px; }
-  .nav { padding: 8px 0; gap: 10px; }
-  .brand img { width: 48px; height: 48px; border-width: 2px; }
-  nav ul{
-    display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; max-width: 58vw; margin: 0; padding: 0;
-  }
-  nav ul::-webkit-scrollbar{ display: none; }
-  nav a{
-    padding: 10px 12px; font-size: 14px; border-width: 1.5px; box-shadow: 0 2px 0 var(--navy);
-  }
-
-  /* Card/khối nội dung (nhẹ border & shadow) */
-  .card, .section-card {
-    padding: 14px; border-width: 1.5px;
-    box-shadow: 0 8px 20px rgba(45,42,74,.10), 0 2px 6px rgba(45,42,74,.06);
-    border-radius: 16px;
-  }
-
-  /* Bảng kéo ngang mượt */
-  .table-wrap { overflow: auto; -webkit-overflow-scrolling: touch; }
-  table { min-width: 560px; border-width: 1.5px; }
-  th, td { padding: 12px 14px; }
-
-  /* Form dùng tap-target ≥44px, tránh zoom iOS */
-  input, textarea, button, .btn { min-height: 44px; font-size: 16px; }
-  .row { grid-template-columns: 1fr; gap: 10px; }
-  .actions { gap: 10px; flex-wrap: wrap; }
-  button, .btn {
-    padding: 12px 16px; border-radius: 12px; border-width: 1.5px;
-    box-shadow: 0 2px 0 var(--navy);
-  }
-
-  /* Ảnh luôn ôm theo màn hình */
-  img { height: auto; max-width: 100%; }
-
-  /* Nút nổi: không đè nội dung và to đủ bấm */
-  .contact-buttons {
-    right: 14px; bottom: 76px; gap: 10px; z-index: 60;
-  }
-  .contact-buttons a {
-    width: 52px; height: 52px; border-width: 1.5px; font-size: 24px;
-  }
-
-  /* Footer gọn */
-  footer { margin-top: 22px; border-top-width: 1.5px; }
-  .footer-inner { padding: 16px 0; }
-}
-
-/* Hạn chế hiệu ứng trên máy yếu/người dùng không thích animation */
-@media (prefers-reduced-motion: reduce){
-  * { animation: none !important; transition: none !important; }
-}
-
-    /* ============ CSS VARIABLES ============ */
     :root{
       --paper:#F6EFDF; --paper-ink:#E9E1CF; --ink:#1C1A2D;
       --navy:#2D2A4A; --maroon:#7E2930; --maroon-d:#5C1F24;
       --mustard:#E3A94C; --teal:#1E8E87; --muted:#5D5B63;
-      --radius:16px;
-      --shadow:0 10px 24px rgba(45,42,74,.12), 0 2px 8px rgba(45,42,74,.08);
+      --radius:18px; --shadow:0 10px 30px rgba(45,42,74,.15), 0 2px 8px rgba(45,42,74,.10);
     }
-    @media (prefers-reduced-motion: reduce){
-      *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
-    }
-
-    /* ============ BASE ============ */
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
     body{
       margin:0; color:var(--ink);
       font-family:"Be Vietnam Pro",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
       line-height:1.65;
       background:
+        radial-gradient(400px 200px at 15% -10%, rgba(227,169,76,.25), transparent 70%),
+        radial-gradient(500px 300px at 110% 0%, rgba(30,142,135,.2), transparent 60%),
+        repeating-radial-gradient(circle at 10% 10%, rgba(0,0,0,.05) 0 1px, transparent 1px 12px),
         radial-gradient(1000px 800px at 50% 0%, var(--paper-ink), transparent 70%),
         var(--paper);
     }
-    /* Tắt nền nặng trên mobile, bật lại ở màn to */
-    @media (min-width: 900px){
-      body{
-        background:
-          radial-gradient(400px 200px at 15% -10%, rgba(227,169,76,.25), transparent 70%),
-          radial-gradient(500px 300px at 110% 0%, rgba(30,142,135,.2), transparent 60%),
-          repeating-radial-gradient(circle at 10% 10%, rgba(0,0,0,.05) 0 1px, transparent 1px 12px),
-          radial-gradient(1000px 800px at 50% 0%, var(--paper-ink), transparent 70%),
-          var(--paper);
-      }
-    }
-    img{max-width:100%;height:auto;display:block}
-    a{color:inherit;text-decoration:none}
-    h1,h2,h3{font-family:"Merriweather",Georgia,serif;letter-spacing:.3px;margin:0 0 .4em}
-    h1{font-size:clamp(20px,4.5vw,28px)}
-    h2{font-size:clamp(18px,4vw,26px)}
-    h3{font-size:clamp(16px,3.5vw,22px)}
+    a{color:inherit;text-decoration:none} img{max-width:100%;display:block;height:auto}
+    h1,h2,h3{font-family:"Merriweather",Georgia,serif;letter-spacing:.4px}
     .container{width:min(1160px,92%);margin-inline:auto}
 
-    /* Skip link để truy cập nhanh nội dung */
-    .skip-link{
-      position:absolute;left:-9999px;top:auto;
-      background:#fff;border:2px solid var(--navy);border-radius:10px;padding:8px 12px;
-    }
-    .skip-link:focus{left:10px;top:10px;z-index:200}
-
-    /* ============ HEADER / NAV ============ */
+    /* Header/Nav */
     header{
       position:sticky;top:0;z-index:50;
-      background:rgba(246,239,223,.95);
-      border-bottom:1.5px solid var(--navy);
-      backdrop-filter:saturate(1.1) blur(6px);
+      background:linear-gradient(180deg,rgba(246,239,223,.95),rgba(246,239,223,.9));
+      border-bottom:2px solid var(--navy); box-shadow:0 6px 12px rgba(45,42,74,.06);
+      backdrop-filter:blur(6px);
     }
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0}
-    .brand{display:flex;gap:10px;align-items:center;min-width:0}
-    .brand img.logo{
-      width:52px;height:52px;object-fit:cover;border-radius:14px;border:2px solid var(--navy);box-shadow:var(--shadow)
-    }
-    .brand .title{display:flex;flex-direction:column;min-width:0}
-    .brand h1{margin:0;color:var(--navy);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .brand span{color:var(--maroon);font-weight:600;font-size:12px}
-
-    /* Nav cuộn ngang trên mobile (khỏi hamburger) */
-    nav ul{
-      list-style:none;display:flex;gap:8px;margin:0;padding:0;
-      overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none;
-      max-width:55vw;
-    }
-    nav ul::-webkit-scrollbar{display:none}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0}
+    .brand{display:flex;gap:14px;align-items:center}
+    .brand img.logo{width:72px;height:72px;object-fit:cover;border-radius:16px;border:3px solid var(--navy);box-shadow:var(--shadow)}
+    .brand .title{display:flex;flex-direction:column}
+    .brand h1{font-size:26px;margin:0;color:var(--navy);text-transform:uppercase}
+    .brand span{color:var(--maroon);font-weight:600}
+    nav ul{list-style:none;display:flex;flex-wrap:wrap;gap:10px;margin:0;padding:0}
     nav a{
-      display:inline-flex;align-items:center;gap:6px;
-      padding:10px 12px;border-radius:999px;font-weight:700;font-size:14px;
-      border:1.5px solid var(--navy); background:#fff7e6; box-shadow:0 2px 0 var(--navy);
-      flex:0 0 auto;
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 14px;border-radius:999px;font-weight:600;
+      border:2px solid var(--navy); background:#fff7e6; box-shadow:0 2px 0 var(--navy);
+      transition:transform .12s,box-shadow .12s,background .12s;
     }
-    nav a:active{transform:translateY(1px)}
+    nav a:hover{transform:translateY(-2px);background:#fff2d5;box-shadow:0 4px 0 var(--navy)}
     nav a.active{background:var(--mustard);color:#2D2A4A}
 
-    /* ============ HERO ============ */
-    .hero{padding:14px 0;border-bottom:1.5px dashed rgba(45,42,74,.25)}
-    .hero-inner{display:grid;grid-template-columns:1fr;gap:14px;align-items:start}
+    /* Hero */
+    .hero{padding:26px 0 18px;border-bottom:2px dashed rgba(45,42,74,.25)}
+    .hero-inner{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
     .hero-card{
-      padding:14px;border-radius:var(--radius);background:#fff7e6;
-      border:1.5px solid var(--navy);box-shadow:var(--shadow)
+      padding:22px;border-radius:var(--radius);background:#fff7e6;
+      border:2px solid var(--navy);box-shadow:var(--shadow)
     }
-    .hero h2{color:var(--maroon-d);margin:.2rem 0 .4rem}
-    .hero p{color:var(--muted);margin:0 0 10px;font-size:15px}
-    .badges{display:flex;gap:8px;flex-wrap:wrap}
+    .hero h2{font-size:30px;margin:.2rem 0 .6rem;color:var(--maroon-d)}
+    .hero p{color:var(--muted);margin:0 0 12px}
+    .badges{display:flex;gap:10px;flex-wrap:wrap}
     .badge{
-      padding:7px 10px;border-radius:999px;font-weight:800;font-size:12px;color:#fff;
-      background:var(--maroon);border:1.5px solid var(--navy);box-shadow:0 2px 0 var(--navy)
+      padding:8px 12px;border-radius:999px;font-weight:700;font-size:13px;color:#fff;
+      background:var(--maroon);border:2px solid var(--navy);box-shadow:0 2px 0 var(--navy)
     }
     .badge.mustard{background:var(--mustard);color:#2D2A4A}
     .badge.teal{background:var(--teal)}
-    .stamp{display:inline-block;margin-top:6px;padding:8px 12px;border:2px double var(--navy);border-radius:10px;background:#ffffffc5;color:var(--navy);font-weight:800;letter-spacing:.4px}
+    .stamp{display:inline-block;margin-top:6px;padding:10px 14px;border:3px double var(--navy);border-radius:12px;background:#ffffffb0;color:var(--navy);font-weight:800;letter-spacing:.5px}
 
-    .notice figure{margin:0}
-    .notice figcaption{
-      font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:.4px;margin:0 0 8px;font-size:12px
-    }
+    /* Sections */
+    main{padding:22px 0}
+    section{padding:22px 0}
+    .section-card{background:#fffef9;border:2px solid var(--navy);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+    h3.section-title{margin:0 0 10px;font-size:22px;color:var(--maroon-d);text-transform:uppercase}
+    .intro p strong{color:var(--maroon-d)} .poem{white-space:pre-line;margin-top:8px}
 
-    /* ≥900px: 2 cột */
-    @media (min-width:900px){
-      .hero-inner{grid-template-columns:1.1fr .9fr;gap:22px}
-      .hero-card{padding:20px}
-      .hero p{font-size:16px}
-    }
+    details{background:#fff7e6;border:2px dashed rgba(45,42,74,.35);border-radius:14px;padding:14px 16px}
+    details+details{margin-top:10px} summary{cursor:pointer;font-weight:700;color:var(--navy)}
 
-    /* ============ SECTIONS CARD ============ */
-    main{padding:16px 0}
-    section{padding:14px 0}
-    .section-card{
-      background:#fffef9;border:1.5px solid var(--navy);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px
-    }
-    h3.section-title{margin:0 0 8px;color:var(--maroon-d);text-transform:uppercase}
+    /* Table */
+    .table-wrap{overflow:auto;-webkit-overflow-scrolling:touch}
+    table{width:100%;border-collapse:separate;border-spacing:0;min-width:560px;background:#fffefb;border:2px solid var(--navy);border-radius:12px}
+    caption{caption-side:top;margin-bottom:10px;font-weight:800;letter-spacing:.4px;color:var(--navy);text-transform:uppercase}
+    thead th{text-align:left;font-size:14px;color:var(--maroon-d);background:#fff2d5;border-bottom:2px solid var(--navy)}
+    th,td{padding:14px 16px} tbody tr{border-bottom:1px dashed rgba(45,42,74,.25)}
+    tbody tr:hover{background:#fff7e6} ol{margin:0;padding-left:18px}
 
-    .intro .poem{white-space:pre-line;margin-top:6px;font-size:15px}
+    /* Footer */
+    footer{margin-top:32px;background:linear-gradient(180deg,rgba(246,239,223,1),rgba(246,239,223,.86));border-top:2px solid var(--navy)}
+    .footer-inner{padding:22px 0;display:grid;gap:18px}
+    .footer-grid{display:grid;gap:18px;grid-template-columns:repeat(2,minmax(0,1fr))}
+    .copy{color:var(--muted);font-size:14px} .contact p{margin:6px 0}
+    .map-grid{display:grid;gap:18px;grid-template-columns:repeat(2,minmax(0,1fr))}
+    .map-grid iframe{width:100%;height:280px;border:0;border-radius:14px;border:2px solid var(--navy);box-shadow:var(--shadow)}
 
-    details{background:#fff7e6;border:1.5px dashed rgba(45,42,74,.35);border-radius:12px;padding:12px}
-    details+details{margin-top:10px}
-    summary{cursor:pointer;font-weight:800;color:var(--navy)}
-
-    /* ============ TABLE WRAP ============ */
-    .table-wrap{overflow:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}
-    table{width:100%;border-collapse:separate;border-spacing:0;min-width:560px;background:#fffefb;border:1.5px solid var(--navy);border-radius:12px}
-    caption{caption-side:top;margin-bottom:8px;font-weight:900;letter-spacing:.3px;color:var(--navy);text-transform:uppercase}
-    thead th{text-align:left;font-size:14px;color:var(--maroon-d);background:#fff2d5;border-bottom:1.5px solid var(--navy)}
-    th,td{padding:12px 14px}
-    tbody tr{border-bottom:1px dashed rgba(45,42,74,.25)}
-    tbody tr:hover{background:#fff7e6}
-    ol{margin:0;padding-left:18px}
-
-    /* ============ FOOTER ============ */
-    footer{margin-top:22px;background:linear-gradient(180deg,rgba(246,239,223,1),rgba(246,239,223,.9));border-top:1.5px solid var(--navy)}
-    .footer-inner{padding:16px 0;display:grid;gap:14px}
-    .footer-grid{display:grid;gap:14px;grid-template-columns:1fr}
-    .copy{color:var(--muted);font-size:14px}
-    .contact p{margin:6px 0}
-    .map-grid{display:grid;gap:14px;grid-template-columns:1fr}
-    .map-grid iframe{width:100%;height:260px;border:0;border-radius:12px;border:1.5px solid var(--navy);box-shadow:var(--shadow)}
-    @media (min-width:900px){
-      .footer-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .map-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .map-grid iframe{height:280px}
-    }
-
-    /* ============ FLOATING BUTTONS ============ */
+    /* To top */
     .to-top{
-      position:fixed;right:14px;bottom:14px;z-index:60;display:inline-flex;align-items:center;justify-content:center;
-      width:48px;height:48px;border-radius:50%;border:1.5px solid var(--navy);background:#fff7e6;color:var(--navy);box-shadow:var(--shadow);
+      position:fixed;right:16px;bottom:16px;z-index:60;display:inline-flex;align-items:center;justify-content:center;
+      width:52px;height:52px;border-radius:50%;border:2px solid var(--navy);background:#fff7e6;color:var(--navy);box-shadow:var(--shadow);
       transition:transform .12s;
-      touch-action:manipulation;
     }
     .to-top:hover{transform:translateY(-2px)}
-    .contact-buttons{
-      position:fixed;right:14px;bottom:74px;display:flex;flex-direction:column;gap:10px;z-index:60
+
+    /* Nút liên hệ nổi */
+    .contact-buttons {
+      position: fixed; right: 16px; bottom: 80px;
+      display: flex; flex-direction: column; gap: 12px; z-index: 100;
     }
-    .contact-buttons a{
-      display:flex;align-items:center;justify-content:center;width:52px;height:52px;border-radius:50%;
-      border:1.5px solid var(--navy);background:#fff7e6;box-shadow:var(--shadow);font-size:24px
+    .contact-buttons a {
+      display:flex;align-items:center;justify-content:center;
+      width:56px;height:56px;border-radius:50%;
+      border:2px solid var(--navy); background:#fff7e6; box-shadow:var(--shadow);
+      font-size:26px; transition: transform .15s, background .15s;
     }
-    .zalo-btn img{width:30px;height:30px}
+    .contact-buttons a:hover { transform: translateY(-3px); background:#fff2d5; }
+    .call-btn { color: var(--maroon-d); }
+    .zalo-btn img { width:34px; height:34px; }
+
+    /* === MOBILE NAV FIX (≤700px) === */
+    @media (max-width:700px){
+      .nav{
+        display:grid; grid-template-columns:auto 1fr; align-items:center; gap:10px; padding:8px 0;
+      }
+      .brand, nav, nav ul{ min-width:0 }
+      .brand img.logo{ width:52px; height:52px; border-width:2px }
+      .brand h1{ font-size:20px; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+      nav ul{
+        display:flex; gap:8px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; max-width:58vw;
+      }
+      nav ul::-webkit-scrollbar{ display:none }
+      nav li{ flex:0 0 auto }
+      nav a{ padding:10px 12px; font-size:14px; border-width:1.5px; box-shadow:0 2px 0 var(--navy) }
+      .hero-inner{ grid-template-columns:1fr; gap:14px }
+      .section-card, .card{ padding:14px; border-width:1.5px; border-radius:16px; box-shadow:0 8px 20px rgba(45,42,74,.10), 0 2px 6px rgba(45,42,74,.06) }
+      .map-grid{ grid-template-columns:1fr }
+      .map-grid iframe{ height:260px }
+      .contact-buttons{ right:14px; bottom:76px; gap:10px }
+      .contact-buttons a{ width:52px; height:52px; border-width:1.5px; font-size:24px }
+      table{ border-width:1.5px }
+      th,td{ padding:12px 14px }
+    }
   </style>
 </head>
 <body>
-  <a href="#main" class="skip-link">Bỏ qua điều hướng</a>
-
   <!-- Header -->
   <header id="top">
     <div class="container nav">
       <a class="brand" href="index.html" aria-label="Trang chủ Trạm">
-        <img class="logo" src="519519306_122269576958024728_6134494741448327598_n.jpg"
-             alt="Logo Trạm" width="52" height="52" loading="eager" decoding="sync">
+        <img class="logo" src="519519306_122269576958024728_6134494741448327598_n.jpg" alt="Logo Trạm" width="64" height="64">
         <div class="title">
           <h1>Trạm</h1>
           <span>Luôn tươi ngon vì sức khỏe</span>
@@ -262,8 +159,8 @@
       <nav aria-label="Điều hướng chính">
         <ul>
           <li><a class="active" href="#gt-ve-tram">Giới thiệu</a></li>
-          <li><a href="menuTramChanh.html#Menu-tram-chanh">Trạm Chanh</a></li>
-          <li><a href="menuTramSua.html#Menu-tram-sua">Trạm Sữa</a></li>
+          <li><a href="menuTramChanh.html#Menu-tram-chanh">Menu Trạm Chanh</a></li>
+          <li><a href="menuTramSua.html#Menu-tram-sua">Menu Trạm Sữa</a></li>
           <li><a href="#danh-muc-san-pham">Danh mục</a></li>
           <li><a href="thoiGianMoCua.html">Mở cửa</a></li>
           <li><a href="lienHe.html">Liên hệ</a></li>
@@ -287,19 +184,14 @@
       </div>
       <div class="notice">
         <figure>
-          <figcaption>Thông báo mới nhất</figcaption>
-          <!-- Ảnh tối ưu: thêm sizes/srcset nếu bạn có bản webp -->
-          <img
-            src="540969295_122278309496024728_7286110682791047457_n.jpg"
-            alt="Thông báo mới"
-            title="Thông báo mới"
-            loading="lazy" decoding="async">
+          <figcaption style="font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:.5px;margin:0 0 10px">Thông báo mới nhất</figcaption>
+          <img src="540969295_122278309496024728_7286110682791047457_n.jpg" alt="Thông báo mới" title="Thông báo mới" loading="lazy" decoding="async">
         </figure>
       </div>
     </div>
   </section>
 
-  <main id="main" class="container">
+  <main class="container">
     <!-- Giới thiệu -->
     <section id="gt-ve-tram" class="section-card intro" aria-labelledby="intro-heading">
       <h3 id="intro-heading" class="section-title">Giới thiệu về Trạm</h3>
@@ -311,7 +203,7 @@ Không phải nước mắt, là trà đó nha😋!</p>
     </section>
 
     <!-- Q&A -->
-    <section class="section-card" aria-labelledby="faq-heading" style="margin-top:12px;">
+    <section class="section-card" aria-labelledby="faq-heading" style="margin-top:18px;">
       <h3 id="faq-heading" class="section-title">Mỗi ngày một câu hỏi</h3>
       <details>
         <summary>Tại sao Trà Quả Mọng lại có tên như vậy?</summary>
@@ -320,7 +212,7 @@ Không phải nước mắt, là trà đó nha😋!</p>
     </section>
 
     <!-- Danh mục -->
-    <section id="danh-muc-san-pham" class="section-card" aria-labelledby="cate-heading" style="margin-top:12px;">
+    <section id="danh-muc-san-pham" class="section-card" aria-labelledby="cate-heading" style="margin-top:18px;">
       <h3 id="cate-heading" class="section-title">Các loại sản phẩm đang bán</h3>
       <div class="table-wrap">
         <table>
@@ -350,7 +242,7 @@ Không phải nước mắt, là trà đó nha😋!</p>
           <tfoot><tr><td colspan="2">Mời bạn tới tiệm để tìm được món yêu thích!</td></tr></tfoot>
         </table>
       </div>
-      <p style="margin-top:10px"><a href="#top">↑ Trở về đầu trang</a></p>
+      <p style="margin-top:14px"><a href="#top">↑ Trở về đầu trang</a></p>
     </section>
   </main>
 
@@ -364,35 +256,25 @@ Không phải nước mắt, là trà đó nha😋!</p>
           <p>📍 <strong>TRẠM CHANH</strong> — 09 Hải Thượng, Phường Cam Ly, Lâm Đồng</p>
           <p>📍 <strong>TRẠM SỮA</strong> — 44 Yersin, Phường Xuân Hương, Lâm Đồng</p>
           <p>📞 <a href="tel:0941668405">094 166 8405</a></p>
-        <div class="map-grid">
-  <figure class="map-lite">
-    <img src="poster-tram-chanh.jpg" alt="Bản đồ Trạm Chanh" loading="lazy" decoding="async">
-    <figcaption>
-      <a class="btn" href="https://maps.app.goo.gl/mp5EodZBvcKLMJpr5" target="_blank" rel="noopener">🗺️ Mở trên Google Maps</a>
-    </figcaption>
-  </figure>
-
-  <figure class="map-lite">
-    <img src="poster-tram-sua.jpg" alt="Bản đồ Trạm Sữa" loading="lazy" decoding="async">
-    <figcaption>
-      <a class="btn" href="https://maps.app.goo.gl/pxAqwYU1uhAjr6fr9" target="_blank" rel="noopener">🗺️ Mở trên Google Maps</a>
-    </figcaption>
-  </figure>
-</div>
-
+        </div>
+        <div class="section-card">
+          <h3 class="section-title" style="margin-bottom:6px">Bản đồ</h3>
+          <div class="map-grid">
+            <iframe src="https://maps.app.goo.gl/mp5EodZBvcKLMJpr5" allowfullscreen loading="lazy" title="Bản đồ Trạm Chanh"></iframe>
+            <iframe src="https://maps.app.goo.gl/pxAqwYU1uhAjr6fr9" allowfullscreen loading="lazy" title="Bản đồ Trạm Sữa"></iframe>
+          </div>
+        </div>
       </div>
     </div>
   </footer>
 
-  <!-- Floating Buttons -->
-  <div class="contact-buttons" aria-label="Liên hệ nhanh">
+  <!-- Nút nổi -->
+  <div class="contact-buttons">
     <a href="tel:0941668405" class="call-btn" aria-label="Gọi hotline Trạm">📞</a>
     <a href="https://zalo.me/0941668405" class="zalo-btn" aria-label="Nhắn tin Zalo Trạm" target="_blank" rel="noopener">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" loading="lazy" decoding="async" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" />
     </a>
   </div>
   <a class="to-top" href="#top" aria-label="Lên đầu trang">⬆️</a>
 </body>
 </html>
-
-
