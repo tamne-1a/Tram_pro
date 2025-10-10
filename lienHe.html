@@ -148,39 +148,45 @@
   </div>
   <script>
 document.getElementById('zaloSendBtn').addEventListener('click', function(e){
-  e.preventDefault(); // chặn mở link mặc định để JS xử lý
+  e.preventDefault(); // Chặn mở link cũ
 
   const name  = (document.getElementById('ten')?.value || '').trim();
   const phone = (document.getElementById('phone')?.value || '').trim();
   const email = (document.getElementById('email')?.value || '').trim();
   const msg   = (document.getElementById('msg')?.value || '').trim();
 
-  // Kiểm tra bắt buộc
-  if(!name || !msg){
+  if (!name || !msg) {
     alert('Vui lòng nhập Tên và Lời nhắn trước khi gửi qua Zalo.');
     return;
   }
 
-  // Ghép nội dung tin nhắn
-  const lines = [
-    'Chào Trạm, mình muốn liên hệ!',
-    `• Tên: ${name}`,
-    `• SĐT: ${phone || 'Chưa cung cấp'}`,
-    `• Email: ${email || 'Chưa cung cấp'}`,
-    `• Nội dung: ${msg}`
-  ];
+  // Tạo nội dung tin nhắn
+  const text = 
+    'Chào Trạm, mình muốn liên hệ!%0A' +
+    '• Tên: ' + encodeURIComponent(name) + '%0A' +
+    '• SĐT: ' + encodeURIComponent(phone || 'Chưa cung cấp') + '%0A' +
+    '• Email: ' + encodeURIComponent(email || 'Chưa cung cấp') + '%0A' +
+    '• Nội dung: ' + encodeURIComponent(msg);
 
-  const text = encodeURIComponent(lines.join('\n'));
-  const zaloLink = `https://zalo.me/0941668405?text=${text}`;
+  // Link mở Zalo chat
+  const zaloLink = 'https://zalo.me/0941668405?text=' + text;
 
-  // 👉 Mở Zalo với tin nhắn đã soạn sẵn
-  window.open(zaloLink, '_blank');  // mở tab mới hoặc app Zalo
+  // Mở trực tiếp (Zalo app hoặc web)
+  if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
+    // Nếu là điện thoại, mở trực tiếp
+    window.location.href = zaloLink;
+  } else {
+    // Nếu là máy tính, mở tab mới
+    window.open(zaloLink, '_blank');
+  }
 });
 </script>
 
 
+
 </body>
 </html>
+
 
 
 
