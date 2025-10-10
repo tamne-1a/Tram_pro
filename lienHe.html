@@ -4,250 +4,132 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Liên hệ — Trạm</title>
-  <meta name="theme-color" content="#F6EFDF" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet" />
   <style>
-      /* === MOBILE PATCH (Áp dụng cho ≤ 700px) === */
-  @media (max-width: 700px){
-    /* Khung/lề & typographic */
-    html { scroll-behavior: smooth; }
-    body { line-height: 1.7; }
-    h1 { font-size: clamp(20px, 5vw, 26px); }
-    h2 { font-size: clamp(18px, 4.6vw, 24px); }
-    h3 { font-size: clamp(16px, 4.2vw, 22px); }
-    .container { width: min(1160px, 94%); }
-  
-    /* Header & Nav (giảm nặng, dễ cuộn) */
-    header { border-bottom-width: 1.5px; }
-    .nav { padding: 8px 0; gap: 10px; }
-    .brand img { width: 48px; height: 48px; border-width: 2px; }
-    nav ul{
-      display: flex; gap: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch;
-      scrollbar-width: none; max-width: 58vw; margin: 0; padding: 0;
-    }
-    nav ul::-webkit-scrollbar{ display: none; }
-    nav a{
-      padding: 10px 12px; font-size: 14px; border-width: 1.5px; box-shadow: 0 2px 0 var(--navy);
-    }
-  
-    /* Card/khối nội dung (nhẹ border & shadow) */
-    .card, .section-card {
-      padding: 14px; border-width: 1.5px;
-      box-shadow: 0 8px 20px rgba(45,42,74,.10), 0 2px 6px rgba(45,42,74,.06);
-      border-radius: 16px;
-    }
-  
-    /* Bảng kéo ngang mượt */
-    .table-wrap { overflow: auto; -webkit-overflow-scrolling: touch; }
-    table { min-width: 560px; border-width: 1.5px; }
-    th, td { padding: 12px 14px; }
-  
-    /* Form dùng tap-target ≥44px, tránh zoom iOS */
-    input, textarea, button, .btn { min-height: 44px; font-size: 16px; }
-    .row { grid-template-columns: 1fr; gap: 10px; }
-    .actions { gap: 10px; flex-wrap: wrap; }
-    button, .btn {
-      padding: 12px 16px; border-radius: 12px; border-width: 1.5px;
-      box-shadow: 0 2px 0 var(--navy);
-    }
-  
-    /* Ảnh luôn ôm theo màn hình */
-    img { height: auto; max-width: 100%; }
-  
-    /* Nút nổi: không đè nội dung và to đủ bấm */
-    .contact-buttons {
-      right: 14px; bottom: 76px; gap: 10px; z-index: 60;
-    }
-    .contact-buttons a {
-      width: 52px; height: 52px; border-width: 1.5px; font-size: 24px;
-    }
-  
-    /* Footer gọn */
-    footer { margin-top: 22px; border-top-width: 1.5px; }
-    .footer-inner { padding: 16px 0; }
-  }
-  
-  /* Hạn chế hiệu ứng trên máy yếu/người dùng không thích animation */
-  @media (prefers-reduced-motion: reduce){
-    * { animation: none !important; transition: none !important; }
-  }
-
     :root{
-      --paper:#F6EFDF; --navy:#2D2A4A; --mustard:#E3A94C; --ink:#1C1A2D; --muted:#5D5B63;
-      --maroon-d:#5C1F24;
+      --paper:#F6EFDF; --navy:#2D2A4A; --mustard:#E3A94C; --ink:#1C1A2D; --muted:#5D5B63; --maroon-d:#5C1F24;
       --radius:18px; --shadow:0 10px 30px rgba(45,42,74,.15), 0 2px 8px rgba(45,42,74,.10);
     }
-    @media (prefers-reduced-motion: reduce){
-      *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
-    }
-
-    *{box-sizing:border-box}
-    body{
-      margin:0;background:var(--paper);color:var(--ink);
-      font-family:"Be Vietnam Pro",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-      line-height:1.65;
-    }
+    *{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font-family:"Be Vietnam Pro",system-ui}
     h1,h2{font-family:"Merriweather",Georgia,serif}
-    h1{font-size:clamp(20px,4.6vw,28px);margin:0}
-    h2{font-size:clamp(18px,4.2vw,26px)}
-    a{color:inherit;text-decoration:none}
-    img{max-width:100%;height:auto;display:block}
+    a{color:inherit;text-decoration:none} img{max-width:100%;display:block;height:auto}
     .container{width:min(1160px,92%);margin-inline:auto}
-
-    /* Header */
-    header{
-      position:sticky;top:0;background:rgba(246,239,223,.95);
-      border-bottom:1.5px solid var(--navy);z-index:10;backdrop-filter:blur(6px)
-    }
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0}
-    .brand{display:flex;gap:10px;align-items:center;min-width:0}
-    .brand img{width:52px;height:52px;border-radius:14px;border:2px solid var(--navy)}
-    nav ul{
-      list-style:none;display:flex;gap:8px;margin:0;padding:0;
-      overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; max-width:56vw;
-    }
-    nav ul::-webkit-scrollbar{display:none}
-    nav a{
-      padding:10px 12px;border-radius:999px;border:1.5px solid var(--navy);
-      background:#fff7e6;box-shadow:0 2px 0 var(--navy);font-weight:700;font-size:14px;flex:0 0 auto
-    }
+    header{position:sticky;top:0;background:rgba(246,239,223,.95);border-bottom:2px solid var(--navy);backdrop-filter:blur(6px)}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 0}
+    nav ul{list-style:none;display:flex;gap:10px;margin:0;padding:0}
+    nav a{padding:10px 14px;border-radius:999px;border:2px solid var(--navy);background:#fff7e6;box-shadow:0 2px 0 var(--navy);font-weight:600}
     nav a.active{background:var(--mustard);color:#2D2A4A}
+    .brand{display:flex;gap:14px;align-items:center}
+    .brand img{width:56px;height:56px;border-radius:14px;border:3px solid var(--navy)}
+    main{padding:22px 0}
+    .card{background:#fffef9;border:2px solid var(--navy);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
 
-    main{padding:16px 0}
-    .card{
-      background:#fffef9;border:1.5px solid var(--navy);border-radius:var(--radius);
-      box-shadow:var(--shadow);padding:14px
-    }
-
-    /* Form */
     form{display:grid;gap:12px;max-width:640px}
-    label{font-weight:600;font-size:15px}
+    label{font-weight:600}
     input, textarea{
-      width:100%; padding:12px 14px; border-radius:12px; border:1.5px solid var(--navy); background:#fffefb;
+      width:100%; padding:12px 14px; border-radius:12px; border:2px solid var(--navy); background:#fffefb;
       font-family:inherit; font-size:16px;
-    }
-    input:focus-visible, textarea:focus-visible, .btn:focus-visible, button:focus-visible{
-      outline:3px solid #2D2A4A33; outline-offset:2px;
     }
     textarea{min-height:140px; resize:vertical}
     .row{display:grid; gap:12px; grid-template-columns:1fr 1fr}
-    @media (max-width:700px){ .row{grid-template-columns:1fr} }
-
     .actions{display:flex;gap:10px;flex-wrap:wrap}
     button, .btn{
-      padding:12px 16px; border-radius:12px; border:1.5px solid var(--navy);
+      padding:12px 16px; border-radius:12px; border:2px solid var(--navy);
       background:var(--mustard); color:#2D2A4A; font-weight:800; cursor:pointer;
       box-shadow:0 2px 0 var(--navy); min-height:44px;
     }
     button[type="reset"]{background:#fff7e6}
     .btn{background:#fff7e6;display:inline-block;text-decoration:none}
-    .btn:hover{background:#fff2d5}
+    .btn:hover{ background:#fff2d5 }
 
-    footer{margin-top:24px;background:rgba(246,239,223,.9);border-top:1.5px solid var(--navy)}
-    .footer-inner{padding:16px 0}
+    footer{margin-top:32px;background:rgba(246,239,223,.9);border-top:2px solid var(--navy)}
+    .footer-inner{padding:22px 0}
 
-    /* Nút nổi */
-    .contact-buttons {
-      position: fixed; right: 14px; bottom: 78px;
-      display: flex; flex-direction: column; gap: 10px; z-index: 100;
+    /* Nút liên hệ nổi */
+    .contact-buttons { position: fixed; right: 16px; bottom: 80px; display: flex; flex-direction: column; gap: 12px; z-index: 100; }
+    .contact-buttons a { display:flex;align-items:center;justify-content:center; width:56px;height:56px;border-radius:50%; border:2px solid var(--navy); background:#fff7e6; box-shadow:var(--shadow); font-size:26px; transition: transform .15s }
+    .contact-buttons a:hover{ transform: translateY(-2px) }
+    .call-btn{ color: var(--maroon-d) }
+    .zalo-btn img{ width:34px; height:34px }
+
+    /* === MOBILE NAV FIX (≤700px) === */
+    @media (max-width:700px){
+      .nav{ display:grid; grid-template-columns:auto 1fr; align-items:center; gap:10px; padding:8px 0 }
+      .brand, nav, nav ul{ min-width:0 }
+      .brand img{ width:48px; height:48px; border-width:2px }
+      .brand h1{ font-size:20px; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+      nav ul{ display:flex; gap:8px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; max-width:58vw }
+      nav ul::-webkit-scrollbar{ display:none }
+      nav li{ flex:0 0 auto }
+      nav a{ padding:10px 12px; font-size:14px; border-width:1.5px; box-shadow:0 2px 0 var(--navy) }
+      .row{ grid-template-columns:1fr }
+      .card{ padding:14px; border-width:1.5px; border-radius:16px; box-shadow:0 8px 20px rgba(45,42,74,.10), 0 2px 6px rgba(45,42,74,.06) }
+      .contact-buttons{ right:14px; bottom:76px; gap:10px }
+      .contact-buttons a{ width:52px; height:52px; border-width:1.5px; font-size:24px }
     }
-    .contact-buttons a {
-      display:flex;align-items:center;justify-content:center;
-      width:52px;height:52px;border-radius:50%;
-      border:1.5px solid var(--navy); background:#fff7e6; box-shadow:var(--shadow);
-      font-size:24px;
-    }
-    .contact-buttons a:hover{transform:translateY(-2px)}
-    .call-btn{color:var(--maroon-d)}
-    .zalo-btn img{width:30px;height:30px}
   </style>
 </head>
 <body>
-  <header>
+  <header id="top">
     <div class="container nav">
-      <a class="brand" href="index.html" aria-label="Trang chủ">
-        <img src="519519306_122269576958024728_6134494741448327598_n.jpg" alt="Trạm" loading="eager" decoding="sync">
-        <h1>Trạm</h1>
-      </a>
-      <nav aria-label="Điều hướng chính">
-        <ul>
-          <li><a href="index.html#gt-ve-tram">Giới thiệu</a></li>
-          <li><a href="menuTramChanh.html#Menu-tram-chanh">Menu Trạm Chanh</a></li>
-          <li><a href="menuTramSua.html#Menu-tram-sua">Menu Trạm Sữa</a></li>
-          <li><a href="index.html#danh-muc-san-pham">Danh mục</a></li>
-          <li><a href="thoiGianMoCua.html">Mở cửa</a></li>
-          <li><a class="active" href="#top">Liên hệ</a></li>
-        </ul>
-      </nav>
+      <a class="brand" href="index.html"><img src="519519306_122269576958024728_6134494741448327598_n.jpg" alt="Trạm"><h1 style="margin:0 0 0 6px;font-size:22px">Trạm</h1></a>
+      <nav><ul>
+        <li><a href="index.html#gt-ve-tram">Giới thiệu</a></li>
+        <li><a href="menuTramChanh.html#Menu-tram-chanh">Menu Trạm Chanh</a></li>
+        <li><a href="menuTramSua.html#Menu-tram-sua">Menu Trạm Sữa</a></li>
+        <li><a href="index.html#danh-muc-san-pham">Danh mục</a></li>
+        <li><a href="thoiGianMoCua.html">Mở cửa</a></li>
+        <li><a class="active" href="#top">Liên hệ</a></li>
+      </ul></nav>
     </div>
   </header>
 
-  <main class="container" id="top">
-    <section class="card" aria-labelledby="contact-title">
-      <h2 id="contact-title" style="margin-top:0">Liên hệ với Trạm</h2>
-
-      <!-- Giữ action GET demo; nếu dùng EmailJS / Form backend thì đổi lại -->
+  <main class="container">
+    <section class="card">
+      <h2 style="margin-top:0">Liên hệ với Trạm</h2>
       <form id="contactForm" action="https://httpbin.org/get" method="get" novalidate>
         <div class="row">
-          <p>
-            <label for="ten">Tên</label><br>
-            <input type="text" id="ten" name="ten" placeholder="Tên của bạn" autocomplete="name" required>
-          </p>
-          <p>
-            <label for="phone">Điện thoại</label><br>
-            <input type="tel" id="phone" name="dien-thoai" placeholder="SĐT của bạn"
-                   inputmode="tel" pattern="[0-9+\-\s]{8,}" autocomplete="tel">
-          </p>
+          <p><label for="ten">Tên</label><br><input type="text" id="ten" name="ten" placeholder="Tên của bạn" autocomplete="name" required></p>
+          <p><label for="phone">Điện thoại</label><br><input type="tel" id="phone" name="dien-thoai" placeholder="SĐT của bạn" inputmode="tel" pattern="[0-9+\\-\\s]{8,}" autocomplete="tel"></p>
         </div>
-
-        <p>
-          <label for="email">Email</label><br>
-          <input type="email" id="email" name="email" placeholder="Email của bạn" autocomplete="email" required>
-        </p>
-
-        <p>
-          <label for="msg">Lời nhắn</label><br>
-          <textarea id="msg" name="loi-nhan" placeholder="Để lại lời nhắn ở đây" required></textarea>
-        </p>
-
+        <p><label for="email">Email</label><br><input type="email" id="email" name="email" placeholder="Email của bạn" autocomplete="email" required></p>
+        <p><label for="msg">Lời nhắn</label><br><textarea id="msg" name="loi-nhan" placeholder="Để lại lời nhắn ở đây" required></textarea></p>
         <div class="actions">
           <button type="submit">Gửi</button>
           <button type="reset">Xóa</button>
 
-          <!-- Zalo: sao chép nội dung -> mở Zalo (workaround ổn định) -->
+          <!-- Zalo: copy nội dung -> mở Zalo -->
           <a id="zaloSendBtn" class="btn" href="https://zalo.me/0941668405" target="_blank" rel="noopener" title="Gửi tin nhắn qua Zalo">
             Gửi qua Zalo
           </a>
 
-          <!-- Mailto dự phòng (mở app mail của khách) -->
-          <a class="btn" href="mailto:nthanhtam.402@gmail.com?subject=Li%C3%AAn%20h%E1%BB%87%20t%E1%BB%AB%20website%20Tr%E1%BA%A1m&body=Ch%C3%A0o%20Tr%E1%BA%A1m%2C%0A..."
-             title="Gửi bằng ứng dụng email trên máy">Gửi bằng Mail</a>
+          <!-- Mailto dự phòng -->
+          <a class="btn" href="mailto:nthanhtam.402@gmail.com?subject=Li%C3%AAn%20h%E1%BB%87%20t%E1%BB%AB%20website%20Tr%E1%BA%A1m&body=Ch%C3%A0o%20Tr%E1%BA%A1m%2C%0A..." title="Gửi bằng ứng dụng email trên máy">Gửi bằng Mail</a>
         </div>
       </form>
-
       <p style="margin-top:12px"><a href="#top">↑ Trở về đầu trang</a></p>
     </section>
   </main>
 
   <footer>
     <div class="container footer-inner">
-      <p class="copy">Bản quyền &copy; thuộc về Trạm.</p>
+      <p>Bản quyền &copy; thuộc về Trạm.</p>
       <p>📍 09 Hải Thượng, Cam Ly, Lâm Đồng &nbsp;•&nbsp; 📍 44 Yersin, Xuân Hương, Lâm Đồng</p>
       <p>📞 <a href="tel:0941668405">094 166 8405</a></p>
     </div>
   </footer>
 
-  <!-- Nút liên hệ nổi -->
+  <!-- Nút nổi -->
   <div class="contact-buttons" aria-label="Liên hệ nhanh">
     <a href="tel:0941668405" class="call-btn" aria-label="Gọi hotline Trạm">📞</a>
     <a href="https://zalo.me/0941668405" class="zalo-btn" aria-label="Nhắn tin Zalo Trạm" target="_blank" rel="noopener">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" loading="lazy" decoding="async" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" />
     </a>
   </div>
 
   <script>
-    // ========== Clipboard helper ==========
+    // Clipboard helper
     async function copyToClipboard(text){
       try{
         if(navigator.clipboard && window.isSecureContext){
@@ -255,7 +137,6 @@
           return true;
         }
       }catch(e){}
-      // Fallback cho trình duyệt cũ
       const ta = document.createElement('textarea');
       ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
       document.body.appendChild(ta); ta.focus(); ta.select();
@@ -264,19 +145,15 @@
       return ok;
     }
 
-    // ========== Zalo button (workaround ổn định mobile + PC) ==========
+    // Zalo button
     document.getElementById('zaloSendBtn').addEventListener('click', async function(e){
       e.preventDefault();
-
       const name  = (document.getElementById('ten')?.value || '').trim();
       const phone = (document.getElementById('phone')?.value || '').trim();
       const email = (document.getElementById('email')?.value || '').trim();
       const msg   = (document.getElementById('msg')?.value || '').trim();
 
-      if(!name || !msg){
-        alert('Vui lòng nhập Tên và Lời nhắn trước khi gửi qua Zalo.');
-        return;
-      }
+      if(!name || !msg){ alert('Vui lòng nhập Tên và Lời nhắn trước khi gửi qua Zalo.'); return; }
 
       const text =
 `Chào Trạm, mình muốn liên hệ!
@@ -286,32 +163,22 @@
 • Nội dung: ${msg}`;
 
       const ok = await copyToClipboard(text);
-      if(ok){
-        alert('Đã sao chép nội dung. Zalo sẽ mở ngay, bạn chỉ cần dán và gửi.');
-      }else{
-        alert('Không thể sao chép tự động. Zalo sẽ mở, vui lòng dán nội dung thủ công.');
-      }
+      if(ok) alert('Đã sao chép nội dung. Zalo sẽ mở ngay, bạn chỉ cần dán và gửi.');
+      else alert('Không thể sao chép tự động. Zalo sẽ mở, vui lòng dán nội dung thủ công.');
 
       // Mở Zalo (app/mobile hoặc web/app trên PC)
       const zaloLink = 'https://zalo.me/0941668405';
-      if(/Mobi|Android|iPhone/i.test(navigator.userAgent)){
-        window.location.href = zaloLink;
-      }else{
-        window.open(zaloLink, '_blank');
-      }
+      if(/Mobi|Android|iPhone/i.test(navigator.userAgent)){ window.location.href = zaloLink; }
+      else{ window.open(zaloLink, '_blank'); }
     });
 
-    // ========== (Tuỳ chọn) chặn submit rỗng ==========
+    // Chặn submit rỗng (demo)
     document.getElementById('contactForm').addEventListener('submit', function(ev){
       const name = document.getElementById('ten').value.trim();
       const email = document.getElementById('email').value.trim();
       const msg = document.getElementById('msg').value.trim();
-      if(!name || !email || !msg){
-        ev.preventDefault();
-        alert('Vui lòng điền đủ Tên, Email và Lời nhắn.');
-      }
+      if(!name || !email || !msg){ ev.preventDefault(); alert('Vui lòng điền đủ Tên, Email và Lời nhắn.'); }
     });
   </script>
 </body>
 </html>
-
