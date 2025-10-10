@@ -65,22 +65,25 @@
 
     .drawer{ position:fixed; inset:0; display:grid; z-index:120 }
     .drawer[hidden]{ display:none }
-    .drawer-backdrop{ position:absolute; inset:0; background:rgba(0,0,0,.35) }
+    .drawer-backdrop{ position:absolute; inset:0; background:rgba(0,0,0,.35); z-index:0 }
     .drawer-nav{
       position:absolute; top:0; right:0; height:100%; width:min(86vw, 340px);
       background:#fffef9; border-left:2px solid var(--navy); box-shadow:var(--shadow);
-      padding:18px; transform:translateX(100%); transition:transform .2s ease-out;
+      padding:18px; padding-top:64px;          /* chừa chỗ cho nút ✕ */
+      transform:translateX(100%); transition:transform .2s ease-out;
+      overflow:auto; z-index:1;
     }
     .drawer.open .drawer-nav{ transform:translateX(0) }
     .drawer-nav ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
     .drawer-nav a{display:block;padding:12px 14px;border:2px solid var(--navy);border-radius:12px;background:#fff7e6;box-shadow:0 2px 0 var(--navy);font-weight:800}
     .drawer-close{
-      position:absolute; top:10px; right:calc(min(86vw, 340px) + 10px);
-      width:40px;height:40px;border-radius:10px;border:2px solid var(--navy);background:#fff7e6;box-shadow:0 2px 0 var(--navy);cursor:pointer;
+      position:absolute; top:12px; right:12px;   /* trong panel */
+      width:40px;height:40px;border-radius:10px;border:2px solid var(--navy);
+      background:#fff7e6;box-shadow:0 2px 0 var(--navy);cursor:pointer;z-index:2;
     }
     @media (max-width:900px){ .nav-inline{display:none} .menu-toggle{display:inline-flex} .brand-logo{width:52px;height:52px;border-width:2px} .brand-title{font-size:20px} }
 
-    /* Hero & sections (giữ nguyên) */
+    /* Hero & sections */
     .hero{padding:26px 0 18px;border-bottom:2px dashed rgba(45,42,74,.25)}
     .hero-inner{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
     .hero-card{padding:22px;border-radius:var(--radius);background:#fff7e6;border:2px solid var(--navy);box-shadow:var(--shadow)}
@@ -158,6 +161,7 @@
 
     <div id="mobile-drawer" class="drawer" hidden>
       <nav class="drawer-nav" aria-label="Menu di động">
+        <button class="drawer-close" aria-label="Đóng menu">✕</button>
         <ul>
           <li><a href="index.html#gt-ve-tram">Giới thiệu</a></li>
           <li><a href="menuTramChanh.html#Menu-tram-chanh">Menu Trạm Chanh</a></li>
@@ -167,7 +171,6 @@
           <li><a href="lienHe.html">Liên hệ</a></li>
         </ul>
       </nav>
-      <button class="drawer-close" aria-label="Đóng menu">✕</button>
       <div class="drawer-backdrop" tabindex="-1"></div>
     </div>
   </header>
@@ -289,4 +292,3 @@ Không phải nước mắt, là trà đó nha😋!</p>
   </script>
 </body>
 </html>
-
