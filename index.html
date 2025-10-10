@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Trạm - Luôn tươi ngon vì sức khỏe" />
-  <title>Trạm — Luôn tươi ngon vì sức khỏe</title>
+  <title>Trạm — Tươi ngon mỗi ngày</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet" />
   <style>
@@ -38,9 +38,7 @@
       backdrop-filter: blur(6px);
       box-shadow:0 6px 12px rgba(45,42,74,.06);
     }
-    .header-bar{
-      display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px; padding:10px 0;
-    }
+    .header-bar{display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px; padding:10px 0;}
     .brand{display:flex;gap:12px;align-items:center;min-width:0}
     .brand-logo{width:56px;height:56px;border-radius:14px;border:3px solid var(--navy);object-fit:cover;box-shadow:var(--shadow)}
     .brand-title{margin:0;color:var(--navy);font-size:22px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -63,9 +61,13 @@
     .menu-toggle[aria-expanded="true"] .bar:nth-child(2){ opacity:0 }
     .menu-toggle[aria-expanded="true"] .bar:nth-child(3){ transform: translateY(-5px) rotate(-45deg) }
 
-    .drawer{ position:fixed; inset:0; display:grid; z-index:120 }
+    /* Drawer + Backdrop: FIX overlay */
+    .drawer{ position:fixed; inset:0; z-index:120; display:block; pointer-events:none; }
     .drawer[hidden]{ display:none }
-    .drawer-backdrop{ position:absolute; inset:0; background:rgba(0,0,0,.35); z-index:0 }
+    .drawer-backdrop{ position:absolute; inset:0; background:rgba(0,0,0,.35); opacity:0; transition:opacity .2s; display:none; z-index:0 }
+    .drawer.open{ pointer-events:auto; }
+    .drawer.open .drawer-backdrop{ display:block; opacity:1; }
+
     .drawer-nav{
       position:absolute; top:0; right:0; height:100%; width:min(86vw, 340px);
       background:#fffef9; border-left:2px solid var(--navy); box-shadow:var(--shadow);
