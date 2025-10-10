@@ -44,43 +44,49 @@
     .footer-inner{padding:22px 0}
     @media (max-width:700px){ .row{grid-template-columns:1fr} }
     /* Nút liên hệ nổi */
-.contact-buttons {
-  position: fixed;
-  right: 16px;
-  bottom: 80px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  z-index: 100;
-}
-
-.contact-buttons a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: 2px solid var(--navy);
-  background: #fff7e6;
-  box-shadow: var(--shadow);
-  font-size: 26px;
-  transition: transform .15s, background .15s;
-}
-
-.contact-buttons a:hover {
-  transform: translateY(-3px);
-  background: #fff2d5;
-}
-
-.call-btn {
-  color: var(--maroon-d);
-}
-
-.zalo-btn img {
-  width: 34px;
-  height: 34px;
-}
+    .contact-buttons {
+      position: fixed;
+      right: 16px;
+      bottom: 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 100;
+    }
+    
+    .contact-buttons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: 2px solid var(--navy);
+      background: #fff7e6;
+      box-shadow: var(--shadow);
+      font-size: 26px;
+      transition: transform .15s, background .15s;
+    }
+    
+    .contact-buttons a:hover {
+      transform: translateY(-3px);
+      background: #fff2d5;
+    }
+    
+    .call-btn {
+      color: var(--maroon-d);
+    }
+    
+    .zalo-btn img {
+      width: 34px;
+      height: 34px;
+    }
+    .btn{
+      padding:10px 16px; border-radius:10px; border:2px solid var(--navy);
+      background:#fff7e6; color:#2D2A4A; font-weight:700; box-shadow:0 2px 0 var(--navy);
+      display:inline-block; cursor:pointer; text-decoration:none;
+    }
+    .btn:hover{ background:#fff2d5 }
 
   </style>
 </head>
@@ -110,9 +116,15 @@
         <p><label for="email">Email</label><br><input type="email" id="email" name="email" placeholder="Email của bạn" required></p>
         <p><label for="msg">Lời nhắn</label><br><textarea id="msg" name="loi-nhan" placeholder="Để lại lời nhắn ở đây"></textarea></p>
         <div class="actions">
-          <button type="submit">Gửi</button>
-          <button type="reset">Xóa</button>
+        <button type="submit">Gửi</button>
+        <button type="reset">Xóa</button>
+      
+        <!-- Nút gửi qua Zalo (mở chat kèm nội dung form) -->
+        <a id="zaloSendBtn" class="btn" href="https://zalo.me/0941668405" target="_blank" rel="noopener" title="Gửi tin nhắn qua Zalo">
+          Gửi qua Zalo
+        </a>
         </div>
+
       </form>
       <p style="margin-top:12px"><a href="#top">↑ Trở về đầu trang</a></p>
     </section>
@@ -126,18 +138,51 @@
     </div>
   </footer>
   <!-- Nút liên hệ nổi -->
-<div class="contact-buttons">
-  <a href="tel:0941668405" class="call-btn" aria-label="Gọi hotline Trạm">
-    📞
-  </a>
-  <a href="https://zalo.me/0941668405" class="zalo-btn" aria-label="Nhắn tin Zalo Trạm" target="_blank" rel="noopener">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" />
-  </a>
-</div>
+  <div class="contact-buttons">
+    <a href="tel:0941668405" class="call-btn" aria-label="Gọi hotline Trạm">
+      📞
+    </a>
+    <a href="https://zalo.me/0941668405" class="zalo-btn" aria-label="Nhắn tin Zalo Trạm" target="_blank" rel="noopener">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" />
+    </a>
+  </div>
+  <script>
+    // Ghép nội dung form vào link Zalo khi bấm nút
+    document.getElementById('zaloSendBtn').addEventListener('click', function(e){
+      // Lấy dữ liệu từ form
+      const name  = (document.getElementById('ten')?.value || '').trim();
+      const phone = (document.getElementById('phone')?.value || '').trim();
+      const email = (document.getElementById('email')?.value || '').trim();
+      const msg   = (document.getElementById('msg')?.value || '').trim();
+    if(!name || !msg){
+    alert('Vui lòng nhập Tên và Lời nhắn trước khi gửi qua Zalo.');
+    e.preventDefault();
+    return;
+  }
+
+      // Tạo nội dung mẫu (bạn có thể sửa câu chữ cho hợp ý)
+      const lines = [
+        'Chào Trạm, mình muốn liên hệ!',
+        `• Tên: ${name || 'Chưa cung cấp'}`,
+        `• SĐT: ${phone || 'Chưa cung cấp'}`,
+        `• Email: ${email || 'Chưa cung cấp'}`,
+        `• Nội dung: ${msg || '—'}`
+      ];
+  
+      // Nối dòng + mã hoá an toàn cho URL
+      const text = encodeURIComponent(lines.join('\n'));
+  
+      // Gán href động để mở Zalo với tin nhắn soạn sẵn
+      this.href = `https://zalo.me/0941668405?text=${text}`;
+  
+      // LƯU Ý:
+      // - Trên mobile có Zalo app: sẽ mở app với tin nhắn đã điền, user chỉ cần "Gửi".
+      // - Trên desktop: sẽ mở Zalo PC (nếu đã cài / đăng nhập) hoặc Zalo Web.
+    });
+  </script>
 
 </body>
 </html>
-
 
 
 
