@@ -59,7 +59,7 @@
     .drawer{ position:fixed; inset:0; z-index:120; display:block; }
     .drawer[hidden]{ display:none !important; }
 
-    /* --- FIX z-index: backdrop dưới, panel trên, nút X cao nhất --- */
+    /* z-index: backdrop dưới, panel trên, nút X cao nhất */
     .drawer-backdrop{
       position:fixed; left:0; right:0; bottom:0;
       top:calc(var(--header-h) + var(--drawer-gap));
@@ -80,7 +80,7 @@
       position:fixed;
       top:calc(var(--header-h) + var(--drawer-gap) + 10px);
       right:calc(min(86vw,340px) + 10px);
-      width:40px;height:40px;border-radius:10px;border:2px solid var(--navy);background:#fff7e6;box-shadow:0 2px 0 var(--navy);cursor:pointer;
+      width:40px;height:40px;border-radius:12px;border:2px solid var(--navy);background:#fff7e6;box-shadow:0 2px 0 var(--navy);cursor:pointer;
       z-index:3;
     }
 
@@ -124,6 +124,55 @@
       .map-grid{grid-template-columns:1fr} .map-grid iframe{height:260px}
       .brand-title{font-size:20px}
     }
+
+    /* === BEAUTY PACK cho menu hamburger === */
+    .menu-toggle{
+      border-radius:12px;
+      background:linear-gradient(180deg,#fffdf7,#fff3d9);
+      box-shadow:0 2px 0 var(--navy), 0 8px 20px rgba(45,42,74,.08);
+    }
+    .menu-toggle .bar{height:2.5px;border-radius:2px}
+
+    .drawer-nav{
+      background:linear-gradient(180deg,rgba(255,253,247,.86),rgba(255,246,220,.86));
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border-left:2px solid var(--navy);
+      border-top:2px solid var(--navy);
+      border-top-left-radius:16px;
+      box-shadow:0 18px 50px rgba(45,42,74,.18), 0 4px 12px rgba(45,42,74,.10);
+      padding:16px;
+    }
+    .drawer-nav .menu-head{
+      display:flex;align-items:center;gap:10px;
+      font-weight:900;letter-spacing:.4px;text-transform:uppercase;
+      color:var(--maroon-d); margin:2px 2px 10px;
+      padding-bottom:8px;border-bottom:2px dashed rgba(45,42,74,.25);
+    }
+    .drawer-nav .menu-head .dot{
+      width:10px;height:10px;border-radius:50%;
+      background:var(--mustard);border:2px solid var(--navy);box-shadow:0 1px 0 var(--navy);
+    }
+    .drawer-nav ul{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+    .drawer-item{
+      display:flex;align-items:center;gap:12px;
+      padding:12px 14px;border-radius:14px;
+      border:2px solid var(--navy);
+      background:#fff7e6;
+      box-shadow:0 2px 0 var(--navy);
+      font-weight:800; text-decoration:none;
+      transition:transform .12s, box-shadow .12s, background .12s;
+    }
+    .drawer-item:hover{transform:translateY(-2px); background:#fff2d5; box-shadow:0 4px 0 var(--navy)}
+    .drawer-item:active{transform:translateY(0); box-shadow:0 1px 0 var(--navy)}
+    .drawer-item .ico{
+      width:28px;height:28px;border-radius:8px;display:grid;place-items:center;
+      border:2px solid var(--navy); box-shadow:0 1px 0 var(--navy);
+      background:#fff; font-size:16px;
+    }
+    .drawer-item.active{ background:var(--mustard); color:#2D2A4A; }
+    .drawer-close{ background:linear-gradient(180deg,#fffdf7,#fff3d9); }
+    @media (max-width:420px){ .drawer-nav{padding:14px} .drawer-item{padding:11px 12px} }
   </style>
 </head>
 <body>
@@ -150,17 +199,18 @@
     </div>
   </header>
 
-  <!-- Drawer (ngoài header, sắp xếp backdrop trước nav để tránh che click) -->
+  <!-- Drawer (ngoài header, backdrop trước nav) -->
   <div id="mobile-drawer" class="drawer" hidden>
     <div class="drawer-backdrop" tabindex="-1"></div>
     <nav class="drawer-nav" aria-label="Menu di động">
+      <div class="menu-head"><span class="dot"></span> Menu</div>
       <ul>
-        <li><a href="index.html#gt-ve-tram">Giới thiệu</a></li>
-        <li><a href="menuTramChanh.html#Menu-tram-chanh">Menu Trạm Chanh</a></li>
-        <li><a href="menuTramSua.html#Menu-tram-sua">Menu Trạm Sữa</a></li>
-        <li><a href="index.html#danh-muc-san-pham">Danh mục</a></li>
-        <li><a href="thoiGianMoCua.html">Mở cửa</a></li>
-        <li><a href="lienHe.html">Liên hệ</a></li>
+        <li><a class="drawer-item" href="index.html#gt-ve-tram"><span class="ico">🏠</span> Giới thiệu</a></li>
+        <li><a class="drawer-item" href="menuTramChanh.html#Menu-tram-chanh"><span class="ico">🍋</span> Menu Trạm Chanh</a></li>
+        <li><a class="drawer-item" href="menuTramSua.html#Menu-tram-sua"><span class="ico">🥛</span> Menu Trạm Sữa</a></li>
+        <li><a class="drawer-item" href="index.html#danh-muc-san-pham"><span class="ico">🧺</span> Danh mục</a></li>
+        <li><a class="drawer-item" href="thoiGianMoCua.html"><span class="ico">⏰</span> Mở cửa</a></li>
+        <li><a class="drawer-item" href="lienHe.html"><span class="ico">☎️</span> Liên hệ</a></li>
       </ul>
     </nav>
     <button class="drawer-close" aria-label="Đóng menu">✕</button>
