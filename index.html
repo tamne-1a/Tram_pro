@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Trạm - Luôn tươi ngon vì sức khỏe" />
-  <title>Trạm — Luôn tươi ngon vì sức khỏe</title>
+  <title>Trạm — Tươi ngon mỗi ngày</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet" />
   <style>
@@ -13,9 +13,8 @@
       --navy:#2D2A4A; --maroon:#7E2930; --maroon-d:#5C1F24;
       --mustard:#E3A94C; --teal:#1E8E87; --muted:#5D5B63;
       --radius:18px; --shadow:0 10px 30px rgba(45,42,74,.15), 0 2px 8px rgba(45,42,74,.10);
-      /* Patch hamburger: khoảng cách dưới header */
-      --header-h: 72px;         /* sẽ được JS đo chính xác */
-      --drawer-gap: 8px;        /* “dời xuống 1 xíu” */
+      /* dời menu xuống dưới header */
+      --header-h:72px; --drawer-gap:8px;
     }
     *{box-sizing:border-box} html{scroll-behavior:smooth}
     body{
@@ -54,7 +53,6 @@
     }
     .nav-inline a:hover{transform:translateY(-2px);background:#fff2d5}
     .nav-inline a.active{background:var(--mustard);color:#2D2A4A}
-
     .menu-toggle{
       display:none;width:44px;height:44px;border-radius:10px;border:2px solid var(--navy);
       background:#fff7e6; box-shadow:0 2px 0 var(--navy); align-items:center; justify-content:center; cursor:pointer;
@@ -63,40 +61,35 @@
     .menu-toggle[aria-expanded="true"] .bar:nth-child(1){ transform: translateY(5px) rotate(45deg) }
     .menu-toggle[aria-expanded="true"] .bar:nth-child(2){ opacity:0 }
     .menu-toggle[aria-expanded="true"] .bar:nth-child(3){ transform: translateY(-5px) rotate(-45deg) }
+    @media (max-width:900px){ .nav-inline{display:none} .menu-toggle{display:inline-flex} .brand-logo{width:52px;height:52px;border-width:2px} .brand-title{font-size:20px} }
 
-    /* Drawer + Backdrop (đÃ DỜI XUỐNG DƯỚI HEADER) */
-    .drawer{ position:fixed; inset:0; z-index:120; display:block; pointer-events:none; }
+    /* Drawer dời xuống dưới header */
+    .drawer{ position: fixed; inset: 0; display: block; z-index: 120; }
     .drawer[hidden]{ display:none }
     .drawer-backdrop{
-      position:fixed; left:0; right:0; bottom:0;
-      top:calc(var(--header-h) + var(--drawer-gap));
-      background:rgba(0,0,0,.35);
-      opacity:0; transition:opacity .2s ease; display:none; z-index:0;
+      position: fixed; left: 0; right: 0; bottom: 0;
+      top: calc(var(--header-h) + var(--drawer-gap));
+      background: rgba(0,0,0,.35);
     }
-    .drawer.open{ pointer-events:auto; }
-    .drawer.open .drawer-backdrop{ display:block; opacity:1; }
-
     .drawer-nav{
-      position:fixed; right:0;
-      top:calc(var(--header-h) + var(--drawer-gap));
-      height:calc(100% - calc(var(--header-h) + var(--drawer-gap)));
-      width:min(86vw, 340px);
+      position: fixed; right: 0;
+      top: calc(var(--header-h) + var(--drawer-gap));
+      height: calc(100% - calc(var(--header-h) + var(--drawer-gap)));
+      width: min(86vw, 340px);
       background:#fffef9; border-left:2px solid var(--navy); box-shadow:var(--shadow);
-      padding:18px; padding-top:64px;
-      transform:translateX(100%); transition:transform .2s ease-out;
-      overflow:auto; z-index:1;
+      padding:18px; transform:translateX(100%); transition:transform .2s ease-out;
     }
     .drawer.open .drawer-nav{ transform:translateX(0) }
     .drawer-nav ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
     .drawer-nav a{display:block;padding:12px 14px;border:2px solid var(--navy);border-radius:12px;background:#fff7e6;box-shadow:0 2px 0 var(--navy);font-weight:800}
     .drawer-close{
-      position:absolute; top:12px; right:12px;
-      width:40px;height:40px;border-radius:10px;border:2px solid var(--navy);
-      background:#fff7e6;box-shadow:0 2px 0 var(--navy);cursor:pointer;z-index:2;
+      position: fixed;
+      top: calc(var(--header-h) + var(--drawer-gap) + 10px);
+      right: calc(min(86vw, 340px) + 10px);
+      width:40px;height:40px;border-radius:10px;border:2px solid var(--navy);background:#fff7e6;box-shadow:0 2px 0 var(--navy);cursor:pointer;
     }
-    @media (max-width:900px){ .nav-inline{display:none} .menu-toggle{display:inline-flex} .brand-logo{width:52px;height:52px;border-width:2px} .brand-title{font-size:20px} }
 
-    /* Hero & sections (giữ nguyên) */
+    /* Hero & sections */
     .hero{padding:26px 0 18px;border-bottom:2px dashed rgba(45,42,74,.25)}
     .hero-inner{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center}
     .hero-card{padding:22px;border-radius:var(--radius);background:#fff7e6;border:2px solid var(--navy);box-shadow:var(--shadow)}
@@ -107,6 +100,7 @@
     .badge.mustard{background:var(--mustard);color:#2D2A4A}
     .badge.teal{background:var(--teal)}
     .stamp{display:inline-block;margin-top:6px;padding:10px 14px;border:3px double var(--navy);border-radius:12px;background:#ffffffb0;color:var(--navy);font-weight:800;letter-spacing:.5px}
+
     main{padding:22px 0}
     section{padding:22px 0}
     .section-card{background:#fffef9;border:2px solid var(--navy);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
@@ -174,7 +168,6 @@
 
     <div id="mobile-drawer" class="drawer" hidden>
       <nav class="drawer-nav" aria-label="Menu di động">
-        <button class="drawer-close" aria-label="Đóng menu">✕</button>
         <ul>
           <li><a href="index.html#gt-ve-tram">Giới thiệu</a></li>
           <li><a href="menuTramChanh.html#Menu-tram-chanh">Menu Trạm Chanh</a></li>
@@ -184,6 +177,7 @@
           <li><a href="lienHe.html">Liên hệ</a></li>
         </ul>
       </nav>
+      <button class="drawer-close" aria-label="Đóng menu">✕</button>
       <div class="drawer-backdrop" tabindex="-1"></div>
     </div>
   </header>
@@ -213,107 +207,4 @@
   <main class="container">
     <section id="gt-ve-tram" class="section-card intro" aria-labelledby="intro-heading">
       <h3 id="intro-heading" class="section-title">Giới thiệu về Trạm</h3>
-      <p><strong>Là sản phẩm từ sữa tươi và trái cây tươi.</strong></p>
-      <p class="poem">Trạm tui tròn trịa dễ thương 😝,
-Đội nón lá rộng, bán sương bán trà.
-Một giọt💧rớt xuống chữ “a”,
-Không phải nước mắt, là trà đó nha😋!</p>
-    </section>
-
-    <section class="section-card" aria-labelledby="faq-heading" style="margin-top:18px;">
-      <h3 id="faq-heading" class="section-title">Mỗi ngày một câu hỏi</h3>
-      <details>
-        <summary>Tại sao Trà Quả Mọng lại có tên như vậy?</summary>
-        <p>Vì <em>quả mọng</em> là nhóm trái cây mọng nước như dâu tây, dâu tằm, phúc bồn tử, việt quất... Món <strong>Trà Quả Mọng</strong> dùng chính các nguyên liệu đó nên có cái tên đặc trưng.</p>
-      </details>
-    </section>
-
-    <section id="danh-muc-san-pham" class="section-card" aria-labelledby="cate-heading" style="margin-top:18px;">
-      <h3 id="cate-heading" class="section-title">Các loại sản phẩm đang bán</h3>
-      <div class="table-wrap">
-        <table>
-          <caption>DANH MỤC SẢN PHẨM</caption>
-          <thead><tr><th>Trạm Chanh</th><th>Trạm Sữa</th></tr></thead>
-          <tbody>
-            <tr>
-              <td><ol><li>Trà Olong trái cây</li><li>Bánh lăn nướng</li></ol></td>
-              <td><ol>
-                <li>Trà sữa tươi</li><li>Sữa hạt tươi</li><li>Tàu hũ</li>
-                <li>Ya-ua sữa bò tươi</li><li>Bánh tam giác nướng</li>
-              </ol></td>
-            </tr>
-          </tbody>
-          <tfoot><tr><td colspan="2">Mời bạn tới tiệm để tìm được món yêu thích!</td></tr></tfoot>
-        </table>
-      </div>
-      <p style="margin-top:14px"><a href="#top">↑ Trở về đầu trang</a></p>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container footer-inner">
-      <div class="footer-grid">
-        <div class="section-card contact">
-          <h3 class="section-title" style="margin-bottom:6px">Liên hệ</h3>
-          <p class="copy">Bản quyền &copy; thuộc về Trạm.</p>
-          <p>📍 <strong>TRẠM CHANH</strong> — 09 Hải Thượng, Phường Cam Ly, Lâm Đồng</p>
-          <p>📍 <strong>TRẠM SỮA</strong> — 44 Yersin, Phường Xuân Hương, Lâm Đồng</p>
-          <p>📞 <a href="tel:0941668405">094 166 8405</a></p>
-        </div>
-        <div class="section-card">
-          <h3 class="section-title" style="margin-bottom:6px">Bản đồ</h3>
-          <div class="map-grid">
-            <iframe src="https://maps.app.goo.gl/mp5EodZBvcKLMJpr5" allowfullscreen loading="lazy" title="Bản đồ Trạm Chanh"></iframe>
-            <iframe src="https://maps.app.goo.gl/pxAqwYU1uhAjr6fr9" allowfullscreen loading="lazy" title="Bản đồ Trạm Sữa"></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <div class="contact-buttons">
-    <a href="tel:0941668405" class="call-btn" aria-label="Gọi hotline Trạm">📞</a>
-    <a href="https://zalo.me/0941668405" class="zalo-btn" aria-label="Nhắn tin Zalo Trạm" target="_blank" rel="noopener">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" />
-    </a>
-  </div>
-  <a class="to-top" href="#top" aria-label="Lên đầu trang">⬆️</a>
-
-  <!-- JS hamburger -->
-  <script>
-  (function(){
-    const btn = document.querySelector('.menu-toggle');
-    const drawer = document.getElementById('mobile-drawer');
-    const panel = drawer?.querySelector('.drawer-nav');
-    const backdrop = drawer?.querySelector('.drawer-backdrop');
-    const closeBtn = drawer?.querySelector('.drawer-close');
-    if(!btn || !drawer || !panel) return;
-    function open(){
-      drawer.hidden = false; requestAnimationFrame(()=> drawer.classList.add('open'));
-      btn.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden';
-      panel.querySelector('a')?.focus({preventScroll:true});
-    }
-    function close(){
-      drawer.classList.remove('open'); btn.setAttribute('aria-expanded','false'); document.body.style.overflow='';
-      setTimeout(()=>{ drawer.hidden = true; }, 180); btn.focus({preventScroll:true});
-    }
-    btn.addEventListener('click', ()=> (btn.getAttribute('aria-expanded')==='true') ? close() : open());
-    backdrop?.addEventListener('click', close); closeBtn?.addEventListener('click', close);
-    panel.addEventListener('click', e=>{ if(e.target.closest('a')) close(); });
-    window.addEventListener('keydown', e=>{ if(e.key==='Escape' && !drawer.hidden) close(); });
-  })();
-
-  /* Đo chiều cao header để dời menu xuống dưới */
-  (function(){
-    const header = document.querySelector('.site-header');
-    function setHeaderHeight(){
-      if(!header) return;
-      document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
-    }
-    window.addEventListener('load', setHeaderHeight);
-    window.addEventListener('resize', setHeaderHeight);
-    window.addEventListener('orientationchange', setHeaderHeight);
-  })();
-  </script>
-</body>
-</html>
+      <p><strong>Là sản phẩm từ sữa tư
