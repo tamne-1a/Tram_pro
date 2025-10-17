@@ -8,157 +8,123 @@
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet" />
   <style>
     :root{
-      --paper:#F6EFDF; --navy:#2D2A4A; --mustard:#E3A94C; --ink:#1C1A2D; --muted:#5D5B63; --maroon-d:#5C1F24;
+      --paper:#F6EFDF; --ink:#1C1A2D; --navy:#2D2A4A; --maroon-d:#5C1F24; --mustard:#E3A94C;
       --radius:18px; --shadow:0 10px 30px rgba(45,42,74,.15), 0 2px 8px rgba(45,42,74,.10);
+      --header-h:72px; --drawer-gap:8px;
     }
     *{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font-family:"Be Vietnam Pro",system-ui}
     h1,h2{font-family:"Merriweather",Georgia,serif}
-    a{color:inherit;text-decoration:none} img{max-width:100%;display:block;height:auto}
+    a{color:inherit;text-decoration:none}
     .container{width:min(1160px,92%);margin-inline:auto}
 
-    /* Header (hamburger) */
-    .site-header{
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(246,239,223,.95);
-      border-bottom: 2px solid var(--navy);
-      backdrop-filter: blur(6px);
-    }
+    .site-header{position:sticky;top:0;z-index:100;background:rgba(246,239,223,.95);border-bottom:2px solid var(--navy);backdrop-filter:blur(6px);box-shadow:0 6px 12px rgba(45,42,74,.06)}
     .header-bar{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:10px 0}
-    .brand{display:flex;gap:12px;align-items:center;min-width:0}
+    .brand{display:flex;gap:12px;align-items:center}
     .brand-logo{width:56px;height:56px;border-radius:14px;border:3px solid var(--navy);object-fit:cover}
-    .brand-title{margin:0;color:var(--navy);font-size:22px}
+    .brand-title{margin:0;color:var(--navy);font-size:22px;text-transform:uppercase}
     .nav-inline ul{list-style:none;display:flex;gap:10px;margin:0;padding:0}
-    .nav-inline a{
-      display:inline-flex;align-items:center;gap:6px;padding:10px 14px;border-radius:999px;
-      border:2px solid var(--navy);background:#fff7e6;box-shadow:0 2px 0 var(--navy);font-weight:700
-    }
+    .nav-inline a{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;font-weight:700;border:2px solid var(--navy);background:#fff7e6;box-shadow:0 2px 0 var(--navy)}
     .nav-inline a.active{background:var(--mustard);color:#2D2A4A}
-    .menu-toggle{
-      display:none;width:44px;height:44px;border-radius:10px;border:2px solid var(--navy);
-      background:#fff7e6;box-shadow:0 2px 0 var(--navy);align-items:center;justify-content:center;cursor:pointer
-    }
-    .menu-toggle .bar{display:block;width:22px;height:2px;background:var(--navy);margin:3px 0;transition:.2s}
-    .menu-toggle[aria-expanded="true"] .bar:nth-child(1){ transform: translateY(5px) rotate(45deg) }
-    .menu-toggle[aria-expanded="true"] .bar:nth-child(2){ opacity:0 }
-    .menu-toggle[aria-expanded="true"] .bar:nth-child(3){ transform: translateY(-5px) rotate(-45deg) }
+    .menu-toggle{display:none;width:44px;height:44px;border-radius:12px;border:2px solid var(--navy);background:linear-gradient(180deg,#fffdf7,#fff3d9);box-shadow:0 2px 0 var(--navy),0 8px 20px rgba(45,42,74,.08);align-items:center;justify-content:center;cursor:pointer}
+    .menu-toggle .bar{display:block;width:22px;height:2.5px;border-radius:2px;background:var(--navy);margin:3px 0;transition:.2s}
+    .menu-toggle[aria-expanded="true"] .bar:nth-child(1){transform:translateY(5px) rotate(45deg)}
+    .menu-toggle[aria-expanded="true"] .bar:nth-child(2){opacity:0}
+    .menu-toggle[aria-expanded="true"] .bar:nth-child(3){transform:translateY(-5px) rotate(-45deg)}
+    @media (max-width:900px){ .nav-inline{display:none} .menu-toggle{display:inline-flex} .brand-logo{width:52px;height:52px} .brand-title{font-size:20px} }
 
-    .drawer{position:fixed;inset:0;display:grid;z-index:120}.drawer[hidden]{display:none}
-    .drawer-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:0}
+    .drawer{position:fixed;inset:0;z-index:120}
+    .drawer[hidden]{display:none !important}
+    .drawer-backdrop{position:fixed;left:0;right:0;bottom:0;top:calc(var(--header-h) + var(--drawer-gap));background:rgba(0,0,0,.35);z-index:1}
     .drawer-nav{
-      position:absolute;top:0;right:0;height:100%;width:min(86vw,340px);
-      background:#fffef9;border-left:2px solid var(--navy);box-shadow:var(--shadow);
-      padding:18px;padding-top:64px;transform:translateX(100%);transition:transform .2s ease-out;
-      overflow:auto;z-index:1
+      position:fixed;right:0;top:calc(var(--header-h) + var(--drawer-gap));
+      height:calc(100% - calc(var(--header-h) + var(--drawer-gap)));
+      width:min(86vw,340px);
+      background:linear-gradient(180deg,rgba(255,253,247,.86),rgba(255,246,220,.86));
+      -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+      border-left:2px solid var(--navy); border-top:2px solid var(--navy); border-top-left-radius:16px;
+      box-shadow:0 18px 50px rgba(45,42,74,.18), 0 4px 12px rgba(45,42,74,.10);
+      padding:16px; transform:translateX(100%); transition:transform .2s ease-out; overflow:auto; z-index:2;
     }
     .drawer.open .drawer-nav{transform:translateX(0)}
-    .drawer-nav ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-    .drawer-nav a{display:block;padding:12px 14px;border:2px solid var(--navy);border-radius:12px;background:#fff7e6;box-shadow:0 2px 0 var(--navy);font-weight:800}
-    .drawer-close{
-      position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:10px;border:2px solid var(--navy);
-      background:#fff7e6;box-shadow:0 2px 0 var(--navy);cursor:pointer;z-index:2
-    }
-    @media (max-width:900px){ .nav-inline{display:none} .menu-toggle{display:inline-flex} .brand-logo{width:52px;height:52px;border-width:2px} .brand-title{font-size:20px} }
+    .drawer-close{position:fixed;top:calc(var(--header-h) + var(--drawer-gap) + 10px);right:calc(min(86vw,340px) + 10px);width:40px;height:40px;border-radius:12px;border:2px solid var(--navy);background:linear-gradient(180deg,#fffdf7,#fff3d9);box-shadow:0 2px 0 var(--navy);cursor:pointer;z-index:3}
+    .drawer-nav .menu-head{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:.4px;text-transform:uppercase;color:var(--maroon-d);margin:2px 2px 10px;padding-bottom:8px;border-bottom:2px dashed rgba(45,42,74,.25)}
+    .drawer-nav .menu-head .dot{width:10px;height:10px;border-radius:50%;background:var(--mustard);border:2px solid var(--navy);box-shadow:0 1px 0 var(--navy)}
+    .drawer-nav ul{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+    .drawer-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;border:2px solid var(--navy);background:#fff7e6;box-shadow:0 2px 0 var(--navy);font-weight:800;text-decoration:none;transition:transform .12s,box-shadow .12s,background .12s}
+    .drawer-item:hover{transform:translateY(-2px);background:#fff2d5;box-shadow:0 4px 0 var(--navy)}
+    .drawer-item .ico{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;border:2px solid var(--navy);box-shadow:0 1px 0 var(--navy);background:#fff;font-size:16px}
 
-    /* Nội dung */
     main{padding:22px 0}
     .card{background:#fffef9;border:2px solid var(--navy);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
     form{display:grid;gap:12px;max-width:640px}
     label{font-weight:600}
-    input,textarea{
-      width:100%;padding:12px 14px;border-radius:12px;border:2px solid var(--navy);background:#fffefb;font-size:16px
-    }
+    input,textarea{width:100%;padding:10px 12px;border-radius:10px;border:2px solid var(--navy);background:#fffefb;font-family:inherit;font-size:16px}
     textarea{min-height:140px;resize:vertical}
     .row{display:grid;gap:12px;grid-template-columns:1fr 1fr}
     .actions{display:flex;gap:10px;flex-wrap:wrap}
-    button,.btn{
-      padding:12px 16px;border-radius:12px;border:2px solid var(--navy);
-      background:var(--mustard);color:#2D2A4A;font-weight:800;box-shadow:0 2px 0 var(--navy);min-height:44px;cursor:pointer
-    }
+    button,.btn{padding:10px 16px;border-radius:10px;border:2px solid var(--navy);box-shadow:0 2px 0 var(--navy);font-weight:700;cursor:pointer}
+    button{background:var(--mustard);color:#2D2A4A}
     button[type="reset"]{background:#fff7e6}
-    .btn{background:#fff7e6;display:inline-block;text-decoration:none}
+    .btn{background:#fff7e6;color:#2D2A4A;text-decoration:none}
     .btn:hover{background:#fff2d5}
-    footer{margin-top:32px;background:rgba(246,239,223,.9);border-top:2px solid var(--navy)} .footer-inner{padding:22px 0}
-
-    /* Nút liên hệ nổi */
+    footer{margin-top:32px;background:rgba(246,239,223,.9);border-top:2px solid var(--navy)}
+    .footer-inner{padding:22px 0}
+    @media (max-width:700px){ .row{grid-template-columns:1fr} }
     .contact-buttons{position:fixed;right:16px;bottom:80px;display:flex;flex-direction:column;gap:12px;z-index:100}
     .contact-buttons a{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;border:2px solid var(--navy);background:#fff7e6;box-shadow:var(--shadow);font-size:26px}
-    .call-btn{color:var(--maroon-d)} .zalo-btn img{width:34px;height:34px}
-
-    /* Mobile tweaks */
-    @media (max-width:700px){
-      .row{grid-template-columns:1fr}
-      .card{padding:14px;border-width:1.5px;border-radius:16px;box-shadow:0 8px 20px rgba(45,42,74,.10),0 2px 6px rgba(45,42,74,.06)}
-      .contact-buttons{right:14px;bottom:76px}
-      .contact-buttons a{width:52px;height:52px;border-width:1.5px;font-size:24px}
-    }
+    .zalo-btn img{width:34px;height:34px}
   </style>
 </head>
 <body>
-  <!-- HEADER -->
-  <header id="top" class="site-header">
+  <header class="site-header">
     <div class="container header-bar">
-      <a class="brand" href="index.html" aria-label="Trang chủ Trạm">
-        <img src="519519306_122269576958024728_6134494741448327598_n.jpg" alt="Trạm" class="brand-logo">
-        <h1 class="brand-title">Trạm</h1>
-      </a>
-
+      <a class="brand" href="index.html"><img class="brand-logo" src="5195...728_6134494741448327598_n.jpg" alt="Trạm"><h1 class="brand-title">Trạm</h1></a>
       <button class="menu-toggle" aria-expanded="false" aria-controls="mobile-drawer" aria-label="Mở menu">
         <span class="bar"></span><span class="bar"></span><span class="bar"></span>
       </button>
-
-      <nav class="nav-inline" aria-label="Điều hướng chính">
-        <ul>
-          <li><a href="index.html#gt-ve-tram">Giới thiệu</a></li>
-          <li><a href="menuTramChanh.html#Menu-tram-chanh">Menu Trạm Chanh</a></li>
-          <li><a href="menuTramSua.html#Menu-tram-sua">Menu Trạm Sữa</a></li>
-          <li><a href="index.html#danh-muc-san-pham">Danh mục</a></li>
-          <li><a href="thoiGianMoCua.html">Mở cửa</a></li>
-          <li><a class="active" href="#top">Liên hệ</a></li>
-        </ul>
-      </nav>
-    </div>
-
-    <div id="mobile-drawer" class="drawer" hidden>
-      <nav class="drawer-nav" aria-label="Menu di động">
-        <button class="drawer-close" aria-label="Đóng menu">✕</button>
-        <ul>
-          <li><a href="index.html#gt-ve-tram">Giới thiệu</a></li>
-          <li><a href="menuTramChanh.html#Menu-tram-chanh">Menu Trạm Chanh</a></li>
-          <li><a href="menuTramSua.html#Menu-tram-sua">Menu Trạm Sữa</a></li>
-          <li><a href="index.html#danh-muc-san-pham">Danh mục</a></li>
-          <li><a href="thoiGianMoCua.html">Mở cửa</a></li>
-          <li><a href="lienHe.html">Liên hệ</a></li>
-        </ul>
-      </nav>
-      <div class="drawer-backdrop" tabindex="-1"></div>
+      <nav class="nav-inline"><ul>
+        <li><a href="index.html#gt-ve-tram">Giới thiệu</a></li>
+        <li><a href="menuTramChanh.html#Menu-tram-chanh">Menu Trạm Chanh</a></li>
+        <li><a href="menuTramSua.html#Menu-tram-sua">Menu Trạm Sữa</a></li>
+        <li><a href="index.html#danh-muc-san-pham">Danh mục</a></li>
+        <li><a href="thoiGianMoCua.html">Mở cửa</a></li>
+        <li><a class="active" href="#top">Liên hệ</a></li>
+      </ul></nav>
     </div>
   </header>
 
-  <!-- MAIN -->
+  <div id="mobile-drawer" class="drawer" hidden>
+    <div class="drawer-backdrop" tabindex="-1"></div>
+    <nav class="drawer-nav" aria-label="Menu di động">
+      <div class="menu-head"><span class="dot"></span> Menu</div>
+      <ul>
+        <li><a class="drawer-item" href="index.html#gt-ve-tram"><span class="ico">🏠</span> Giới thiệu</a></li>
+        <li><a class="drawer-item" href="menuTramChanh.html#Menu-tram-chanh"><span class="ico">🍋</span> Menu Trạm Chanh</a></li>
+        <li><a class="drawer-item" href="menuTramSua.html#Menu-tram-sua"><span class="ico">🥛</span> Menu Trạm Sữa</a></li>
+        <li><a class="drawer-item" href="index.html#danh-muc-san-pham"><span class="ico">🧺</span> Danh mục</a></li>
+        <li><a class="drawer-item" href="thoiGianMoCua.html"><span class="ico">⏰</span> Mở cửa</a></li>
+        <li><a class="drawer-item" href="lienHe.html"><span class="ico">☎️</span> Liên hệ</a></li>
+      </ul>
+    </nav>
+    <button class="drawer-close" aria-label="Đóng menu">✕</button>
+  </div>
+
   <main class="container">
     <section class="card">
       <h2 style="margin-top:0">Liên hệ với Trạm</h2>
-
-      <form id="contactForm" action="https://httpbin.org/get" method="get" novalidate>
+      <form action="https://formspree.io/f/your_id_here" method="POST">
         <div class="row">
-          <p><label for="ten">Tên</label><br><input type="text" id="ten" name="ten" placeholder="Tên của bạn" autocomplete="name" required></p>
-          <p><label for="phone">Điện thoại</label><br><input type="tel" id="phone" name="dien-thoai" placeholder="SĐT của bạn" inputmode="tel" pattern="[0-9+\\-\\s]{8,}" autocomplete="tel"></p>
+          <p><label for="ten">Tên</label><br><input type="text" id="ten" name="ten" placeholder="Tên của bạn" required></p>
+          <p><label for="phone">Điện thoại</label><br><input type="tel" id="phone" name="dien-thoai" placeholder="SĐT của bạn"></p>
         </div>
-        <p><label for="email">Email</label><br><input type="email" id="email" name="email" placeholder="Email của bạn" autocomplete="email" required></p>
-        <p><label for="msg">Lời nhắn</label><br><textarea id="msg" name="loi-nhan" placeholder="Để lại lời nhắn ở đây" required></textarea></p>
-
+        <p><label for="email">Email</label><br><input type="email" id="email" name="email" placeholder="Email của bạn" required></p>
+        <p><label for="msg">Lời nhắn</label><br><textarea id="msg" name="loi-nhan" placeholder="Để lại lời nhắn ở đây"></textarea></p>
         <div class="actions">
           <button type="submit">Gửi</button>
           <button type="reset">Xóa</button>
-
-          <!-- Zalo: copy nội dung -> mở Zalo -->
           <a id="zaloSendBtn" class="btn" href="https://zalo.me/0941668405" target="_blank" rel="noopener" title="Gửi tin nhắn qua Zalo">Gửi qua Zalo</a>
-
-          <!-- Mailto dự phòng (mở ứng dụng email, tới nthanhtam.402@gmail.com) -->
-          <a id="mailtoBtn" class="btn" href="#" title="Gửi bằng ứng dụng email trên máy">Gửi bằng Mail</a>
         </div>
       </form>
-
       <p style="margin-top:12px"><a href="#top">↑ Trở về đầu trang</a></p>
     </section>
   </main>
@@ -171,104 +137,43 @@
     </div>
   </footer>
 
-  <!-- Nút nổi -->
-  <div class="contact-buttons" aria-label="Liên hệ nhanh">
-    <a href="tel:0941668405" class="call-btn" aria-label="Gọi hotline Trạm">📞</a>
+  <div class="contact-buttons">
+    <a href="tel:0941668405" aria-label="Gọi hotline Trạm">📞</a>
     <a href="https://zalo.me/0941668405" class="zalo-btn" aria-label="Nhắn tin Zalo Trạm" target="_blank" rel="noopener">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo" />
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg" alt="Zalo">
     </a>
   </div>
 
-  <!-- JS -->
+  <!-- JS đo header + toggle drawer -->
   <script>
-    // Hamburger
+    (function(){const h=document.querySelector('.site-header');function setH(){if(!h)return;document.documentElement.style.setProperty('--header-h',h.offsetHeight+'px')}window.addEventListener('load',setH);window.addEventListener('resize',setH);window.addEventListener('orientationchange',setH)})();
     (function(){
-      const btn = document.querySelector('.menu-toggle');
-      const drawer = document.getElementById('mobile-drawer');
-      const panel = drawer?.querySelector('.drawer-nav');
-      const backdrop = drawer?.querySelector('.drawer-backdrop');
-      const closeBtn = drawer?.querySelector('.drawer-close');
-      if(!btn || !drawer || !panel) return;
-      function open(){ drawer.hidden=false; requestAnimationFrame(()=>drawer.classList.add('open')); btn.setAttribute('aria-expanded','true'); document.body.style.overflow='hidden'; panel.querySelector('a')?.focus({preventScroll:true}); }
-      function close(){ drawer.classList.remove('open'); btn.setAttribute('aria-expanded','false'); document.body.style.overflow=''; setTimeout(()=>{drawer.hidden=true;},180); btn.focus({preventScroll:true}); }
-      btn.addEventListener('click',()=> (btn.getAttribute('aria-expanded')==='true')?close():open());
-      backdrop?.addEventListener('click',close); closeBtn?.addEventListener('click',close);
-      panel.addEventListener('click',e=>{ if(e.target.closest('a')) close(); });
-      window.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!drawer.hidden) close(); });
+      const btn=document.querySelector('.menu-toggle'),drawer=document.getElementById('mobile-drawer'),panel=drawer?.querySelector('.drawer-nav'),backdrop=drawer?.querySelector('.drawer-backdrop'),closeBtn=drawer?.querySelector('.drawer-close');
+      if(!btn||!drawer||!panel)return;
+      function open(){drawer.hidden=false;requestAnimationFrame(()=>drawer.classList.add('open'));btn.setAttribute('aria-expanded','true');document.body.style.overflow='hidden'}
+      function close(){drawer.classList.remove('open');btn.setAttribute('aria-expanded','false');document.body.style.overflow='';setTimeout(()=>{drawer.hidden=true},180)}
+      btn.addEventListener('click',()=>btn.getAttribute('aria-expanded')==='true'?close():open());backdrop?.addEventListener('click',close);closeBtn?.addEventListener('click',close);panel.addEventListener('click',e=>{if(e.target.closest('a'))close()});window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!drawer.hidden)close()})
     })();
+  </script>
 
-    // Helper: copy to clipboard
-    async function copyToClipboard(text){
-      try{
-        if(navigator.clipboard && window.isSecureContext){
-          await navigator.clipboard.writeText(text);
-          return true;
-        }
-      }catch(e){}
-      const ta=document.createElement('textarea');
-      ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
-      document.body.appendChild(ta); ta.focus(); ta.select();
-      const ok=document.execCommand('copy');
-      document.body.removeChild(ta);
-      return ok;
-    }
-
-    // Zalo button
-    document.getElementById('zaloSendBtn').addEventListener('click', async function(e){
+  <!-- JS soạn tin nhắn Zalo từ form -->
+  <script>
+    document.getElementById('zaloSendBtn').addEventListener('click', function(e){
       e.preventDefault();
       const name  = (document.getElementById('ten')?.value || '').trim();
       const phone = (document.getElementById('phone')?.value || '').trim();
       const email = (document.getElementById('email')?.value || '').trim();
       const msg   = (document.getElementById('msg')?.value || '').trim();
-      if(!name || !msg){ alert('Vui lòng nhập Tên và Lời nhắn trước khi gửi qua Zalo.'); return; }
-
-      const text = `Chào Trạm, mình muốn liên hệ!
-• Tên: ${name}
-• SĐT: ${phone || 'Chưa cung cấp'}
-• Email: ${email || 'Chưa cung cấp'}
-• Nội dung: ${msg}`;
-
-      const ok = await copyToClipboard(text);
-      if(ok) alert('Đã sao chép nội dung. Zalo sẽ mở ngay, bạn chỉ cần dán và gửi.');
-      else alert('Không thể sao chép tự động. Zalo sẽ mở, vui lòng dán nội dung thủ công.');
-
-      const zaloLink = 'https://zalo.me/0941668405';
-      if(/Mobi|Android|iPhone/i.test(navigator.userAgent)) window.location.href = zaloLink;
-      else window.open(zaloLink, '_blank');
-    });
-
-    // Mailto
-    document.getElementById('mailtoBtn').addEventListener('click', function(e){
-      e.preventDefault();
-      const name  = (document.getElementById('ten')?.value || '').trim();
-      const phone = (document.getElementById('phone')?.value || '').trim();
-      const email = (document.getElementById('email')?.value || '').trim();
-      const msg   = (document.getElementById('msg')?.value || '').trim();
-
-      const subject = encodeURIComponent('Liên hệ từ website Trạm');
-      const body = encodeURIComponent(
-`Chào Trạm,
-
-Mình muốn liên hệ:
-• Tên: ${name || 'Chưa cung cấp'}
-• SĐT: ${phone || 'Chưa cung cấp'}
-• Email: ${email || 'Chưa cung cấp'}
-• Nội dung:
-${msg || '(Chưa nhập)'}
-`
-      );
-      window.location.href = `mailto:nthanhtam.402@gmail.com?subject=${subject}&body=${body}`;
-    });
-
-    // Validate form demo
-    document.getElementById('contactForm').addEventListener('submit', function(ev){
-      const name = document.getElementById('ten').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const msg = document.getElementById('msg').value.trim();
-      if(!name || !email || !msg){
-        ev.preventDefault();
-        alert('Vui lòng điền đủ Tên, Email và Lời nhắn.');
-      }
+      if (!name || !msg) { alert('Vui lòng nhập Tên và Lời nhắn trước khi gửi qua Zalo.'); return; }
+      const text =
+        'Chào Trạm, mình muốn liên hệ!%0A' +
+        '• Tên: ' + encodeURIComponent(name) + '%0A' +
+        '• SĐT: ' + encodeURIComponent(phone || 'Chưa cung cấp') + '%0A' +
+        '• Email: ' + encodeURIComponent(email || 'Chưa cung cấp') + '%0A' +
+        '• Nội dung: ' + encodeURIComponent(msg);
+      const zaloLink = 'https://zalo.me/0941668405?text=' + text;
+      if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) { window.location.href = zaloLink; }
+      else { window.open(zaloLink, '_blank'); }
     });
   </script>
 </body>
