@@ -58,10 +58,13 @@
     /* Drawer: dời xuống dưới header & đặt ngoài header */
     .drawer{ position:fixed; inset:0; z-index:120; display:block; }
     .drawer[hidden]{ display:none !important; }
+
+    /* --- FIX z-index: backdrop dưới, panel trên, nút X cao nhất --- */
     .drawer-backdrop{
       position:fixed; left:0; right:0; bottom:0;
       top:calc(var(--header-h) + var(--drawer-gap));
       background:rgba(0,0,0,.35);
+      z-index:1;
     }
     .drawer-nav{
       position:fixed; right:0;
@@ -70,15 +73,15 @@
       width:min(86vw,340px);
       background:#fffef9; border-left:2px solid var(--navy); box-shadow:var(--shadow);
       padding:18px; transform:translateX(100%); transition:transform .2s ease-out; overflow:auto;
+      z-index:2;
     }
     .drawer.open .drawer-nav{ transform:translateX(0) }
-    .drawer-nav ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
-    .drawer-nav a{display:block;padding:12px 14px;border:2px solid var(--navy);border-radius:12px;background:#fff7e6;box-shadow:0 2px 0 var(--navy);font-weight:800}
     .drawer-close{
       position:fixed;
       top:calc(var(--header-h) + var(--drawer-gap) + 10px);
       right:calc(min(86vw,340px) + 10px);
       width:40px;height:40px;border-radius:10px;border:2px solid var(--navy);background:#fff7e6;box-shadow:0 2px 0 var(--navy);cursor:pointer;
+      z-index:3;
     }
 
     /* Hero & sections */
@@ -90,16 +93,16 @@
     .badge{padding:8px 12px;border-radius:999px;font-weight:700;font-size:13px;color:#fff;background:var(--maroon);border:2px solid var(--navy);box-shadow:0 2px 0 var(--navy)}
     .badge.mustard{background:var(--mustard);color:#2D2A4A}
     .badge.teal{background:var(--teal)}
-    .stamp{display:inline-block;margin-top:6px;padding:10px 14px;border:3px double var(--navy);border-radius:12px;background:#ffffffb0;color:var(--navy);font-weight:800;letter-spacing:.5px}
+    .stamp{display:inline-block;margin-top:6px;padding:10px 14px;border:3px double var(--navy);border-radius:12px;background:#ffffffb0;color:#2D2A4A;font-weight:800;letter-spacing:.5px}
 
     main{padding:22px 0}
     section{padding:22px 0}
     .section-card{background:#fffef9;border:2px solid var(--navy);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
-    h3.section-title{margin:0 0 10px;font-size:22px;color:var(--maroon-d);text-transform:uppercase}
+    h3.section-title{margin:0 0 10px;font-size:22px;color:#2D2A4A;text-transform:uppercase}
     .table-wrap{overflow:auto;-webkit-overflow-scrolling:touch}
     table{width:100%;border-collapse:separate;border-spacing:0;min-width:560px;background:#fffefb;border:2px solid var(--navy);border-radius:12px}
-    caption{caption-side:top;margin-bottom:10px;font-weight:800;letter-spacing:.4px;color:var(--navy);text-transform:uppercase}
-    thead th{text-align:left;font-size:14px;color:var(--maroon-d);background:#fff2d5;border-bottom:2px solid var(--navy)}
+    caption{caption-side:top;margin-bottom:10px;font-weight:800;letter-spacing:.4px;color:#2D2A4A;text-transform:uppercase}
+    thead th{text-align:left;font-size:14px;color:#5C1F24;background:#fff2d5;border-bottom:2px solid var(--navy)}
     th,td{padding:14px 16px} tbody tr{border-bottom:1px dashed rgba(45,42,74,.25)}
     tbody tr:hover{background:#fff7e6} ol{margin:0;padding-left:18px}
 
@@ -147,8 +150,9 @@
     </div>
   </header>
 
-  <!-- Drawer (ngoài header để không bị ẩn) -->
+  <!-- Drawer (ngoài header, sắp xếp backdrop trước nav để tránh che click) -->
   <div id="mobile-drawer" class="drawer" hidden>
+    <div class="drawer-backdrop" tabindex="-1"></div>
     <nav class="drawer-nav" aria-label="Menu di động">
       <ul>
         <li><a href="index.html#gt-ve-tram">Giới thiệu</a></li>
@@ -160,7 +164,6 @@
       </ul>
     </nav>
     <button class="drawer-close" aria-label="Đóng menu">✕</button>
-    <div class="drawer-backdrop" tabindex="-1"></div>
   </div>
 
   <!-- HERO -->
@@ -257,7 +260,7 @@ Không phải nước mắt, là trà đó nha😋!</p>
       const drawer = document.getElementById('mobile-drawer');
       const panel = drawer?.querySelector('.drawer-nav');
       const backdrop = drawer?.querySelector('.drawer-backdrop');
-      const closeBtn = document.querySelector('.drawer-close');
+      const closeBtn = drawer?.querySelector('.drawer-close') || document.querySelector('.drawer-close');
       if(!btn || !drawer || !panel) return;
 
       function open(){
