@@ -178,8 +178,7 @@
       else { window.open(zaloLink, '_blank'); }
     });
   </script>
-    <!-- JS soạn nội dung Email từ form -->
-  <!-- JS soạn nội dung Email từ form (bản fix) -->
+  <!-- JS soạn nội dung Email từ form (fix hoạt động trên cả desktop) -->
   <script>
     document.getElementById('emailSendBtn').addEventListener('click', function(e){
       e.preventDefault();
@@ -194,7 +193,6 @@
         return;
       }
   
-      // 1) Chuẩn bị subject & body dạng text THUẦN
       const subjectText = `Liên hệ từ khách hàng Trạm: ${name}`;
       const bodyText =
   `Xin chào Trạm,
@@ -207,22 +205,26 @@
   
   Trân trọng.`;
   
-      // 2) Encode TẤT CẢ subject & body
       const subject = encodeURIComponent(subjectText);
       const body    = encodeURIComponent(bodyText);
+      const to      = 'nthanhtam.402@gmail.com';
+      const mailto  = `mailto:${to}?subject=${subject}&body=${body}`;
   
-      // 3) Ghép mailto đúng chuẩn (chỉ 1 dấu ?)
-      const to = 'nthanhtam.402@gmail.com';
-      const mailtoLink = `mailto:${to}?subject=${subject}&body=${body}`;
-  
-      // 4) Điều hướng
-      window.location.href = mailtoLink;
+      // ✅ Cách an toàn: tạo thẻ <a> ẩn rồi click
+      const tempLink = document.createElement('a');
+      tempLink.href = mailto;
+      tempLink.style.display = 'none';
+      document.body.appendChild(tempLink);
+      tempLink.click();
+      document.body.removeChild(tempLink);
     });
   </script>
 
 
+
 </body>
 </html>
+
 
 
 
