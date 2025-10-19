@@ -178,52 +178,111 @@
       else { window.open(zaloLink, '_blank'); }
     });
   </script>
-  <!-- JS soạn nội dung Email từ form (fix hoạt động trên cả desktop) -->
-  <script>
-    document.getElementById('emailSendBtn').addEventListener('click', function(e){
+  <!-- JS soạn nội dung Email từ form: có fallback Gmail/Outlook Web -->
+<script>
+  (function(){
+    const btn = document.getElementById('emailSendBtn');
+    if(!btn) return;
+
+    function composeText(name, phone, email, msg){
+      const subject = `Liên hệ từ khách hàng Trạm: ${name}`;
+      const body =
+`Xin chào Trạm,
+
+Mình muốn liên hệ với Trạm.
+• Tên: ${name}
+• SĐT: ${phone || 'Chưa cung cấp'}
+• Email: ${email || 'Chưa cung cấp'}
+• Nội dung: ${msg}
+
+Trân trọng.`;
+      return { subject, body };
+    }
+
+    function buildLinks(to, subject, body){
+      const esub = encodeURIComponent(subject);
+      const ebody = encodeURIComponent(body);
+
+      const mailto = `mailto:${to}?subject=${esub}&body=${ebody}`;
+      const gmail  = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${esub}&body=${ebody}`;
+      const outlook= `https://outlook.office.com/mail/deeplink/compose?to=${encodeURIComponent(to)}&subject=${esub}&body=${ebody}`;
+      return { mailto, gmail, outlook };
+    }
+
+    // Nhẹ nhàng hiện thông báo hướng dẫn khi phải fallback
+    function showHint(){
+      let el = document.getElementById('mail-hint');
+      if(el) { el.style.display='block'; return; }
+      el = document.createElement('div');
+      el.id = 'mail-hint';
+      el.style.cssText = 'position:fixed;right:16px;bottom:16px;max-width:360px;background:#fffef9;border:2px solid #2D2A4A;border-radius:12px;box-shadow:0 10px 30px rgba(45,42,74,.15);padding:12px 14px;font:14px/1.4 "Be Vietnam Pro", system-ui;z-index:1000';
+      el.innerHTML = `
+        <strong>Không mở được ứng dụng Email trên máy tính?</strong><br/>
+        • Có thể máy chưa đặt <em>ứng dụng email mặc định</em> (Outlook, Mail, v.v.).<br/>
+        • Mình đã mở trang soạn thư Gmail cho bạn. Nếu dùng Outlook Web, bấm <a href="#" id="openOutlookLink">vào đây</a>.<br/>
+        <div style="margin-top:6px;opacity:.8">Mẹo: Trên Chrome 👉 Settings → Default browser → Default apps → đặt mail client; hoặc bật “Allow handlers” cho Gmail.</div>
+      `;
+      document.body.appendChild(el);
+      return el;
+    }
+
+    btn.addEventListener('click', function(e){
       e.preventDefault();
-  
+
       const name  = (document.getElementById('ten')?.value || '').trim();
       const phone = (document.getElementById('phone')?.value || '').trim();
       const email = (document.getElementById('email')?.value || '').trim();
       const msg   = (document.getElementById('msg')?.value || '').trim();
-  
       if (!name || !msg) {
         alert('Vui lòng nhập Tên và Lời nhắn trước khi gửi Email.');
         return;
       }
-  
-      const subjectText = `Liên hệ từ khách hàng Trạm: ${name}`;
-      const bodyText =
-  `Xin chào Trạm,
-  
-  Mình muốn liên hệ với Trạm.
-  • Tên: ${name}
-  • SĐT: ${phone || 'Chưa cung cấp'}
-  • Email: ${email || 'Chưa cung cấp'}
-  • Nội dung: ${msg}
-  
-  Trân trọng.`;
-  
-      const subject = encodeURIComponent(subjectText);
-      const body    = encodeURIComponent(bodyText);
-      const to      = 'nthanhtam.402@gmail.com';
-      const mailto  = `mailto:${to}?subject=${subject}&body=${body}`;
-  
-      // ✅ Cách an toàn: tạo thẻ <a> ẩn rồi click
-      const tempLink = document.createElement('a');
-      tempLink.href = mailto;
-      tempLink.style.display = 'none';
-      document.body.appendChild(tempLink);
-      tempLink.click();
-      document.body.removeChild(tempLink);
+
+      const { subject, body } = composeText(name, phone, email, msg);
+      const to = 'tramdalat.id.vn@gmail.com';
+      const { mailto, gmail, outlook } = buildLinks(to, subject, body);
+
+      // Tầng 1: click() trên <a> ẩn
+      let opened = false;
+      try {
+        const a = document.createElement('a');
+        a.href = mailto;
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        opened = true;
+      } catch(_) {}
+
+      // Tầng 2: thử chuyển hướng trực tiếp
+      // Dùng setTimeout nhỏ để tránh đè lên thao tác click() ở tầng 1
+      setTimeout(() => {
+        // Một số browser không “throw” khi thất bại, vì vậy ta luôn cung cấp fallback Gmail mở tab mới
+        // Tầng 3: mở Gmail compose (web) — luôn mở được kể cả khi không có app mail
+        const w = window.open(gmail, '_blank', 'noopener');
+        if(!w) {
+          // Nếu pop-up bị chặn, thử điều hướng tab hiện tại
+          window.location.href = gmail;
+        }
+
+        // Hiện gợi ý + link Outlook Web
+        const hint = showHint();
+        const ol = document.getElementById('openOutlookLink');
+        if (ol) {
+          ol.addEventListener('click', function(ev){
+            ev.preventDefault();
+            const w2 = window.open(outlook, '_blank', 'noopener');
+            if(!w2) window.location.href = outlook;
+          });
+        }
+      }, 250);
     });
-  </script>
-
-
+  })();
+</script>
 
 </body>
 </html>
+
 
 
 
