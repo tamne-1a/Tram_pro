@@ -179,32 +179,51 @@
     });
   </script>
     <!-- JS soạn nội dung Email từ form -->
+  <!-- JS soạn nội dung Email từ form (bản fix) -->
   <script>
     document.getElementById('emailSendBtn').addEventListener('click', function(e){
       e.preventDefault();
+  
       const name  = (document.getElementById('ten')?.value || '').trim();
       const phone = (document.getElementById('phone')?.value || '').trim();
       const email = (document.getElementById('email')?.value || '').trim();
       const msg   = (document.getElementById('msg')?.value || '').trim();
-      if (!name || !msg) { alert('Vui lòng nhập Tên và Lời nhắn trước khi gửi Email.'); return; }
-
-      const subject = encodeURIComponent("Liên hệ từ khách hàng Trạm: " + name);
-      const body =
-        "Xin chào Trạm,%0D%0A%0D%0A" +
-        "Mình muốn liên hệ với Trạm.%0D%0A" +
-        "• Tên: " + encodeURIComponent(name) + "%0D%0A" +
-        "• SĐT: " + encodeURIComponent(phone || "Chưa cung cấp") + "%0D%0A" +
-        "• Email: " + encodeURIComponent(email || "Chưa cung cấp") + "%0D%0A" +
-        "• Nội dung: " + encodeURIComponent(msg) + "%0D%0A%0D%0A" +
-        "Trân trọng.";
-
-      const mailtoLink = "mailto:tramdalat.id.vn@gmail.com?subject=" + subject + "&body=" + body;
+  
+      if (!name || !msg) {
+        alert('Vui lòng nhập Tên và Lời nhắn trước khi gửi Email.');
+        return;
+      }
+  
+      // 1) Chuẩn bị subject & body dạng text THUẦN
+      const subjectText = `Liên hệ từ khách hàng Trạm: ${name}`;
+      const bodyText =
+  `Xin chào Trạm,
+  
+  Mình muốn liên hệ với Trạm.
+  • Tên: ${name}
+  • SĐT: ${phone || 'Chưa cung cấp'}
+  • Email: ${email || 'Chưa cung cấp'}
+  • Nội dung: ${msg}
+  
+  Trân trọng.`;
+  
+      // 2) Encode TẤT CẢ subject & body
+      const subject = encodeURIComponent(subjectText);
+      const body    = encodeURIComponent(bodyText);
+  
+      // 3) Ghép mailto đúng chuẩn (chỉ 1 dấu ?)
+      const to = 'tramdalat.id.vn@gmail.com';
+      const mailtoLink = `mailto:${to}?subject=${subject}&body=${body}`;
+  
+      // 4) Điều hướng
       window.location.href = mailtoLink;
     });
   </script>
 
+
 </body>
 </html>
+
 
 
 
