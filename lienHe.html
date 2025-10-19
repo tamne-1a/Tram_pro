@@ -123,6 +123,7 @@
           <button type="submit">Gửi</button>
           <button type="reset">Xóa</button>
           <a id="zaloSendBtn" class="btn" href="https://zalo.me/0941668405" target="_blank" rel="noopener" title="Gửi tin nhắn qua Zalo">Gửi qua Zalo</a>
+          <a id="emailSendBtn" class="btn" href="mailto:tramdalat.id.vn@gmail.com" title="Gửi email đến Trạm">Gửi qua Email</a>
         </div>
       </form>
       <p style="margin-top:12px"><a href="#top">↑ Trở về đầu trang</a></p>
@@ -177,7 +178,33 @@
       else { window.open(zaloLink, '_blank'); }
     });
   </script>
+    <!-- JS soạn nội dung Email từ form -->
+  <script>
+    document.getElementById('emailSendBtn').addEventListener('click', function(e){
+      e.preventDefault();
+      const name  = (document.getElementById('ten')?.value || '').trim();
+      const phone = (document.getElementById('phone')?.value || '').trim();
+      const email = (document.getElementById('email')?.value || '').trim();
+      const msg   = (document.getElementById('msg')?.value || '').trim();
+      if (!name || !msg) { alert('Vui lòng nhập Tên và Lời nhắn trước khi gửi Email.'); return; }
+
+      const subject = encodeURIComponent("Liên hệ từ khách hàng Trạm: " + name);
+      const body =
+        "Xin chào Trạm,%0D%0A%0D%0A" +
+        "Mình muốn liên hệ với Trạm.%0D%0A" +
+        "• Tên: " + encodeURIComponent(name) + "%0D%0A" +
+        "• SĐT: " + encodeURIComponent(phone || "Chưa cung cấp") + "%0D%0A" +
+        "• Email: " + encodeURIComponent(email || "Chưa cung cấp") + "%0D%0A" +
+        "• Nội dung: " + encodeURIComponent(msg) + "%0D%0A%0D%0A" +
+        "Trân trọng.";
+
+      const mailtoLink = "mailto:tramdalat.id.vn@gmail.com?subject=" + subject + "&body=" + body;
+      window.location.href = mailtoLink;
+    });
+  </script>
+
 </body>
 </html>
+
 
 
